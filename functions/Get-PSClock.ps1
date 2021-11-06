@@ -8,25 +8,25 @@ Function Get-PSClock {
         return
     }
 
-    if ($PSClockSettings) {
+    if ($global:PSClockSettings) {
         #remove runspace if not running
-        if ( -not ($Global:PSClockSettings.running)) {
+        if ( -not ($global:PSClockSettings.running)) {
             $global:PSClockSettings.remove("Runspace")
         }
 
         [psCustomObject]@{
             PSTypeName = "PSClock"
-            Started    = $Global:PSClockSettings.Started
-            Format     = $Global:PSClockSettings.DateFormat
-            Output     = (Get-Date -Format $Global:PSClockSettings.DateFormat)
-            Running    = $Global:PSClockSettings.Running
-            FontFamily = $Global:PSClockSettings.FontFamily
+            Started    = $global:PSClockSettings.Started
+            Format     = $global:PSClockSettings.DateFormat
+            Output     = (Get-Date -Format $global:PSClockSettings.DateFormat)
+            Running    = $global:PSClockSettings.Running
+            FontFamily = $global:PSClockSettings.FontFamily
             Size       = $global:PSClockSettings.fontSize
             Weight     = $global:PSClockSettings.FontWeight
             Color      = $global:PSClockSettings.Color
             Style      = $global:PSClockSettings.FontStyle
-            OnTop      = $Global:PSClockSettings.OnTop
-            RunspaceID = $Global:PSClockSettings.Runspace.id
+            OnTop      = $global:PSClockSettings.OnTop
+            RunspaceID = $global:PSClockSettings.Runspace.id
         }
     }
     Else {

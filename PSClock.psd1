@@ -7,7 +7,7 @@
 @{
 
     RootModule           = 'PSClock.psm1'
-    ModuleVersion        = '0.7.0'
+    ModuleVersion        = '0.8.0'
     CompatiblePSEditions = @('Desktop', 'Core')
     GUID                 = '668afa48-5176-4fd0-bd0f-e414155c6da3'
     Author               = 'Jeff Hicks'
@@ -16,10 +16,10 @@
     Description          = 'A set of commands for creating and managing a WPF-based clock that runs on your Windows desktop.'
     PowerShellVersion    = '5.1'
     RequiredModules      = @('ThreadJob')
-    RequiredAssemblies   = @('PresentationFramework', 'PresentationCore', 'WindowsBase')
+    RequiredAssemblies   = @('PresentationFramework', 'PresentationCore', 'WindowsBase','System.Drawing')
     FormatsToProcess     = @('formats\psclock.format.ps1xml')
     FunctionsToExport    = 'Start-PSClock', 'Set-PSClock', 'Get-PSClock', 'Stop-PSClock'
-    VariablesToExport    = ''
+    VariablesToExport    = 'PSClockSettings'
     AliasesToExport      = 'psclock'
     # TypesToProcess = @()
     PrivateData          = @{

@@ -2,12 +2,13 @@
 Get-ChildItem -path $PSScriptroot\functions\*.ps1 |
 ForEach-Object { . $_.Fullname}
 
+#this module should never even run on a non-Windows platform.
+#This code is a failsafe.
 if ($IsWindows -OR ($PSEdition -eq 'desktop')) {
 
-    Register-ArgumentCompleter -CommandName Show-PSClock, Set-PSClock -ParameterName FontFamily -ScriptBlock {
+    Register-ArgumentCompleter -CommandName 'Start-PSClock','Set-PSClock' -ParameterName 'FontFamily' -ScriptBlock {
         param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
 
-        #PowerShell code to populate $wordtoComplete
         [System.Drawing.Text.InstalledFontCollection]::new().Families.Name |
         Where-Object { $_ -match "^$($WordToComplete)" } |
         ForEach-Object {
@@ -17,6 +18,4 @@ if ($IsWindows -OR ($PSEdition -eq 'desktop')) {
     }
 
 }
-
-
 

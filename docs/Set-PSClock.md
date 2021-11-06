@@ -14,7 +14,7 @@ Modify a running PSClock
 ## SYNTAX
 
 ```yaml
-Set-PSClock [[-DateFormat] <String>] [-FontSize <Int32>] [-FontStyle <String>] [-FontWeight <String>] [-FontFamily <String>] [-Color <String>] [-OnTop] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-PSClock [[-DateFormat] <String>] [-FontSize <Int32>] [-FontStyle <String>] [-FontWeight <String>] [-FontFamily <String>] [-Color <String>] [-OnTop] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,7 +43,7 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -75,7 +75,7 @@ Aliases: format
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -91,7 +91,7 @@ Aliases: family
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -107,7 +107,7 @@ Aliases: size
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -124,7 +124,7 @@ Accepted values: Normal, Italic, Oblique
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -141,13 +141,27 @@ Accepted values: Normal, Bold, Light
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -OnTop
 
 Should the clock be on top of other applications?
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Passthru
 
 ```yaml
 Type: SwitchParameter
