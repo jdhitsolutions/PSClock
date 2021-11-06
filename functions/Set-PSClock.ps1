@@ -33,7 +33,9 @@ Function Set-PSClock {
         [string]$Color,
 
         [Parameter(HelpMessage = "Should the clock be on top of other applications?")]
-        [switch]$OnTop
+        [switch]$OnTop,
+
+        [switch]$Passthru
     )
 
     if ($IsLinux -OR $isMacOS) {
@@ -52,6 +54,11 @@ Function Set-PSClock {
                 }
             }
         } #foreach setting
+
+        if ($Passthru) {
+            Start-Sleep -Seconds 1
+            Get-PSClock
+        }
     } #if running clock found
     else {
         Write-Warning "Can't find a running clock. Do you need to start one?"

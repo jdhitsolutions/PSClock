@@ -7,7 +7,7 @@
 @{
 
     RootModule           = 'PSClock.psm1'
-    ModuleVersion        = '0.1.0'
+    ModuleVersion        = '0.7.0'
     CompatiblePSEditions = @('Desktop', 'Core')
     GUID                 = '668afa48-5176-4fd0-bd0f-e414155c6da3'
     Author               = 'Jeff Hicks'

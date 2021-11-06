@@ -1,7 +1,7 @@
 Function Start-PSClock {
     [cmdletbinding()]
     [alias("psclock")]
-    [OutputType("none", "PSClock")]
+    [OutputType("None", "PSClock")]
     Param(
         [Parameter(Position = 0, HelpMessage = "Specify a .NET format string value like F, or G.")]
         [alias("format")]
@@ -24,7 +24,7 @@ Function Start-PSClock {
 
         [Parameter(HelpMessage = "Specify a font color like Green or an HTML code like '#FF1257EA' ")]
         [ValidateNotNullOrEmpty()]
-        [string]$Color = "Black",
+        [string]$Color = "White",
 
         [Parameter(HelpMessage = "Specify a font family.")]
         [ValidateNotNullOrEmpty()]
