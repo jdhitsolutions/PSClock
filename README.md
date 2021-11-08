@@ -26,7 +26,7 @@ The font size must be at least 8. You should have tab completion for the `Color`
 
 By default, the clock will be displayed on the center of your screen. You can click and drag the clock to reposition using the left mouse button. You might have to try a few times to "grab" the clock. You can close the clock with a right click or the `Stop-PSClock` command.
 
-The command lets you specify any datetime format string. This is the same value you would use in a command like `Get-Date -format U`. Note that these strings are case-sensitive.
+The command lets you specify any datetime format string. This is the same value you would use in a command like `Get-Date -format U`. Note that these strings are case-sensitive. See  https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings for more information.
 
 ```powershell
 Start-PSClock -size 30 -Color Yellow -format G -FontFamily Verdana
