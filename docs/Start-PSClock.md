@@ -9,12 +9,12 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Start a PSClock
+Start a PSClock.
 
 ## SYNTAX
 
 ```yaml
-Start-PSClock [[-DateFormat] <String>] [-FontSize <Int32>] [-FontStyle <String>] [-FontWeight <String>] [-Color <String>] [-FontFamily <String>] [-OnTop] [-Passthru] [<CommonParameters>]
+Start-PSClock [[-DateFormat] <String>] [-FontSize <Int32>] [-FontStyle <String>] [-FontWeight <String>] [-Color <String>] [-FontFamily <String>] [-OnTop] [-Position <Int32[]>] [-Force] [-Passthru]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,9 +27,19 @@ The clock runs in a separate runspace launched from your PowerShell session. If 
 
 The command is designed to only have one clock running at a time. If you try to start another clock from another PowerShell session, you will get a warning.
 
+If you have saved PSClock settings, the exported values will be used unless you use -Force. The saved settings file will not be deleted.
+
 ## EXAMPLES
 
 ### Example 1
+
+```powershell
+PS C:\> Start-PSClock
+```
+
+Start a new PSClock using the default parameter values. If you have saved PSClock settings, then those values will be used.
+
+### Example 2
 
 ```powershell
 PS C:\> Start-PSClock -size 24 -FontFamily 'Bahnschrift Light' -OnTop
@@ -41,7 +51,7 @@ Start a clock using specific font settings. The clock will be displayed center s
 
 ### -Color
 
-Specify a font color like Green or an HTML code like '#FF1257EA'.
+Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue.
 
 ```yaml
 Type: String
@@ -167,6 +177,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Force
+
+Force a new PSClock, ignoring any previously saved settings. The saved settings file will remain.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Position
+
+Specify the clock position as an array of left and top values.
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -183,6 +225,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## NOTES
 
+View the project's README file at https://bit.ly/3H01fJe.
+
 Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
 
 ## RELATED LINKS
@@ -192,3 +236,5 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 [Get-PSClock](Get-PSClock.md)
 
 [Stop-PSClock](Stop-PSClock.md)
+
+[Save-PSClock](Save-PSClock.md)

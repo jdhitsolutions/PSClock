@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Get PSClock details
+Get PSClock details.
 
 ## SYNTAX
 
@@ -26,11 +26,12 @@ This command will provide detailed information about a PSClock.
 ### Example 1
 
 ```powershell
-PS C:\>  Get-PSClock
+PS C:\>  PS C:\> get-psclock
 
-Running Format FontFamily        Size Weight Color Style  OnTop RunspaceID
-------- ------ ----------        ---- ------ ----- -----  ----- ----------
-True      F    Bahnschrift Light   24 Normal White Normal True          10
+Running Format FontFamily Size Weight Color  Style  OnTop RunspaceID
+------- ------ ---------- ---- ------ -----  -----  ----- ----------
+True      F    Segoi UI     30 Normal yellow Normal False         62
+
 
 ```
 
@@ -39,19 +40,21 @@ Get details about the currently running clock.
 ### Example 2
 
 ```powershell
-PS C:\> Get-PSClock | Select *
+PS C:\> PS C:\> get-psclock | Select *
 
-Started    : 11/6/2021 9:21:49 AM
-Format     : F
-Output     : Saturday, November 6, 2021 9:35:56 AM
-Running    : True
-FontFamily : Bahnschrift Light
-Size       : 24
-Weight     : Normal
-Color      : White
-Style      : Normal
-OnTop      : True
-RunspaceID : 10
+Started         : 11/7/2021 4:18:30 PM
+Format          : F
+Output          : Sunday, November 7, 2021 4:26:18 PM
+Running         : True
+FontFamily      : Segoi UI
+Size            : 30
+Weight          : Normal
+Color           : yellow
+Style           : Normal
+OnTop           : False
+CurrentPosition : {1635, 1089}
+RunspaceID      : 62
+
 ```
 
 Get all details about the current clock.
@@ -81,3 +84,5 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 [Start-PSClock](Start-PSClock.md)
 
 [Stop-PSClock](Stop-PSClock.md)
+
+[Save-PSClock](Save-PSClock.md)

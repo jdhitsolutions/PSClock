@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Modify a running PSClock
+Modify a running PSClock.
 
 ## SYNTAX
 
@@ -20,6 +20,8 @@ Set-PSClock [[-DateFormat] <String>] [-FontSize <Int32>] [-FontStyle <String>] [
 ## DESCRIPTION
 
 Use this command to modify the settings of a running PSClock. You can also increase the size by selecting the clock and use the + key. Decrease using the - key. Each change takes a second to be applied. You might need to "grab" the clock and move it slightly to ensure you have it selected.
+
+If you want to change the position, left-click and drag to re-position.
 
 ## EXAMPLES
 
@@ -33,7 +35,7 @@ PS C:\> Set-PSClock -size 28 -FontStyle Oblique -FontFamily 'Tahoma'
 
 ### -Color
 
-Specify a font color like Green or an HTML code like '#FF1257EA'
+Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue.
 
 ```yaml
 Type: String
@@ -215,3 +217,5 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 [Get-PSClock](Get-PSClock.md)
 
 [Stop-PSClock](Stop-PSClock.md)
+
+[Save-PSClock](Save-PSClock.md)

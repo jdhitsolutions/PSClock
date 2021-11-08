@@ -7,7 +7,7 @@
 @{
 
     RootModule           = 'PSClock.psm1'
-    ModuleVersion        = '0.8.0'
+    ModuleVersion        = '0.9.0'
     CompatiblePSEditions = @('Desktop', 'Core')
     GUID                 = '668afa48-5176-4fd0-bd0f-e414155c6da3'
     Author               = 'Jeff Hicks'
@@ -18,17 +18,17 @@
     RequiredModules      = @('ThreadJob')
     RequiredAssemblies   = @('PresentationFramework', 'PresentationCore', 'WindowsBase','System.Drawing')
     FormatsToProcess     = @('formats\psclock.format.ps1xml')
-    FunctionsToExport    = 'Start-PSClock', 'Set-PSClock', 'Get-PSClock', 'Stop-PSClock'
+    FunctionsToExport    = 'Start-PSClock', 'Set-PSClock', 'Get-PSClock', 'Stop-PSClock','Save-PSClock'
     VariablesToExport    = 'PSClockSettings'
     AliasesToExport      = 'psclock'
     # TypesToProcess = @()
     PrivateData          = @{
 
         PSData = @{
-            Tags = @("clock", "wpf")
-            LicenseUri = ''
+            Tags = @("clock", "wpf","windows")
+            LicenseUri = 'https://github.com/jdhitsolutions/PSClock/blob/main/LICENSE.txt'
             ProjectUri = 'https://github.com/jdhitsolutions/PSClock'
-            # IconUri = ''
+            IconUri = 'https://raw.githubusercontent.com/jdhitsolutions/PSClock/master/images/psclock.png'
             # ReleaseNotes = ''
             # Prerelease = ''
             RequireLicenseAcceptance = $false

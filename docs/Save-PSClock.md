@@ -5,31 +5,33 @@ online version:
 schema: 2.0.0
 ---
 
-# Stop-PSClock
+# Save-PSClock
 
 ## SYNOPSIS
 
-Stop a running PSClock.
+Save current PSClock settings to a file.
 
 ## SYNTAX
 
 ```yaml
-Stop-PSClock [-WhatIf] [-Confirm] [<CommonParameters>]
+Save-PSClock [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Use this command to stop a running PSClock from the PowerShell prompt. You can also right-click the clock to dismiss it, or close and remove the runspace it is using.
+This command will export the settings for a PSClock to an xml file,using Export-CliXML. The file PSClockSettings.xml will be created in $HOME. The next time you run Start-PSClock, if this file is detected, the settings will be imported and used for the clock unless you use -Force. If you no longer wish to use the saved settings, you can manually delete the file.
 
-If you close the PowerShell session that launched the clock, the clock will also be closed. Note that this forced closing will not delete the flag file which indicates that a clock is running. The next time you try to start a clock you may see a warning. Delete the specified file and try starting a clock again.
+The clock does not have to be running in order to export the settings.
 
 ## EXAMPLES
 
 ### Example 1
 
 ```powershell
-PS C:\> Stop-PSClock
+PS C:\> Save-PSClock
 ```
+
+Save current settings to $HOME\PSClockSettings.xml.
 
 ## PARAMETERS
 
@@ -76,7 +78,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### none
+### None
 
 ## NOTES
 
@@ -84,8 +86,6 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 
 ## RELATED LINKS
 
-[Set-PSClock](Set-PSClock.md)
+[Start-PSClock](Start-PSClock.md)
 
 [Get-PSClock](Get-PSClock.md)
-
-[Start-PSClock](Start-PSClock.md)

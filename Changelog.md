@@ -1,5 +1,18 @@
 # Changelog for PSClock
 
+## v0.9.0
+
++ Added a module icon.
++ Modified `Start-PSClock` and `Get-PSClock` to include window position information.
++ Added `Save-PSClock` to export settings to a CliXML file.
++ Updated `Start-PSClock` to use saved values if found.
++ Added an argument completer for the `Color` parameter of `Start-PSClock` and `Set-PSClock`.
++ Updated help documentation.
++ Updated `README.md`.
++ Added verbose output for module import.
++ Manifest updates.
++ Release to PowerShell Gallery
+
 ## v0.8.0
 
 + Modified `Start-PSClock` and `Set-PSClock` to take parameter input from the pipeline by property name.

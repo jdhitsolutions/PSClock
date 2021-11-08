@@ -15,18 +15,19 @@ Function Get-PSClock {
         }
 
         [psCustomObject]@{
-            PSTypeName = "PSClock"
-            Started    = $global:PSClockSettings.Started
-            Format     = $global:PSClockSettings.DateFormat
-            Output     = (Get-Date -Format $global:PSClockSettings.DateFormat)
-            Running    = $global:PSClockSettings.Running
-            FontFamily = $global:PSClockSettings.FontFamily
-            Size       = $global:PSClockSettings.fontSize
-            Weight     = $global:PSClockSettings.FontWeight
-            Color      = $global:PSClockSettings.Color
-            Style      = $global:PSClockSettings.FontStyle
-            OnTop      = $global:PSClockSettings.OnTop
-            RunspaceID = $global:PSClockSettings.Runspace.id
+            PSTypeName      = "PSClock"
+            Started         = $global:PSClockSettings.Started
+            Format          = $global:PSClockSettings.DateFormat
+            Output          = (Get-Date -Format $global:PSClockSettings.DateFormat)
+            Running         = $global:PSClockSettings.Running
+            FontFamily      = $global:PSClockSettings.FontFamily
+            Size            = $global:PSClockSettings.fontSize
+            Weight          = $global:PSClockSettings.FontWeight
+            Color           = $global:PSClockSettings.Color
+            Style           = $global:PSClockSettings.FontStyle
+            OnTop           = $global:PSClockSettings.OnTop
+            CurrentPosition = $global:PSClockSettings.CurrentPosition
+            RunspaceID      = $global:PSClockSettings.Runspace.id
         }
     }
     Else {

@@ -35,11 +35,19 @@ Function Start-PSClock {
         [Parameter(HelpMessage = "Do you want the clock to always be on top?", ValueFromPipelineByPropertyName)]
         [switch]$OnTop,
 
+        [Parameter(HelpMessage = "Specify the clock position as an array of left and top values.", ValueFromPipelineByPropertyName)]
+        [ValidateCount(2, 2)]
+        [Int32[]]$Position,
+
+        [Parameter(HelpMessage = "Force a new PSClock, ignoring any previously saved settings. The saved settings file will remain.")]
+        [switch]$Force,
+
         [switch]$Passthru
     )
 
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
+
     } #begin
     Process {
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Validating"
@@ -76,17 +84,29 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
             Return
         }
 
+        #Test if there is a saved settings file and no other parameters have been called
+        if ((Test-Path $SavePath)-AND (-not $Force)) {
+            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Using saved settings"
+            $import = Import-Clixml -Path $SavePath
+            foreach ($prop in $import.psobject.properties) {
+                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Using imported value for $($prop.name)"
+                Set-Variable -name $prop.name -value $prop.Value
+            }
+        }
+
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Building a synchronized hashtable"
         $global:PSClockSettings = [hashtable]::Synchronized(@{
-                DateFormat = $DateFormat
-                FontSize   = $FontSize
-                FontStyle  = $FontStyle
-                FontWeight = $FontWeight
-                Color      = $Color
-                FontFamily = $FontFamily
-                OnTop      = $OnTop
+                DateFormat       = $DateFormat
+                FontSize         = $FontSize
+                FontStyle        = $FontStyle
+                FontWeight       = $FontWeight
+                Color            = $Color
+                FontFamily       = $FontFamily
+                OnTop            = $OnTop
+                StartingPosition = $Position
+                CurrentPosition  = $Null
             })
-
+        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($global:PSClockSettings | Out-String)"
         #Run the clock in a runspace
         $rs = [RunspaceFactory]::CreateRunspace()
         $rs.ApartmentState = "STA"
@@ -125,10 +145,10 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 $form = New-Object System.Windows.Window
 
                 <#
-            some of the form settings are irrelevant because it is transparent
-            but leaving them in the event I need to turn off transparency
-            to debug or troubleshoot
-            #>dd
+                some of the form settings are irrelevant because it is transparent
+                but leaving them in the event I need to turn off transparency
+                to debug or troubleshoot
+                #>
 
                 $form.Title = "PSTimer"
                 $form.Height = 200
@@ -140,7 +160,14 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 $form.Background = "Transparent"
                 $form.borderthickness = "1,1,1,1"
                 $form.VerticalAlignment = "top"
-                $form.WindowStartupLocation = "CenterScreen"
+
+                if ($PsclockSettings.StartingPosition) {
+                    $form.left = $PSClockSettings.StartingPosition[0]
+                    $form.top = $PSClockSettings.StartingPosition[1]
+                }
+                else {
+                    $form.WindowStartupLocation = "CenterScreen"
+                }
                 $form.WindowStyle = "None"
                 $form.ShowInTaskbar = $False
 
@@ -199,6 +226,10 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
 
                             $form.TopMost = $PSClockSettings.OnTop
                             $form.UpdateLayout()
+
+                            #$PSClockSettings.Window = $Form
+                            $PSClockSettings.CurrentPosition = $form.left,$form.top
+
                         }
                         else {
                             _QuitClock
@@ -208,7 +239,9 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
 
                 $PSClockSettings.Running = $True
                 $PSClockSettings.Started = Get-Date
-
+                #$PSClockSettings.Window = $Form
+                $PsclockSettings.Top = $form.top
+                $PSClockSettings.Left = $form.left
                 [void]$form.ShowDialog()
             })
 
