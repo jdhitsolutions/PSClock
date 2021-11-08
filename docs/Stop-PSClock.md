@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSClock-help.xml
 Module Name: PSClock
 online version: https://bit.ly/3C7ad3X
