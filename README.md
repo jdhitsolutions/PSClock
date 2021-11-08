@@ -1,8 +1,12 @@
 # PSClock
 
+![PSGallery Version](https://img.shields.io/powershellgallery/v/PSClock.png?style=for-the-badge&logo=powershell&label=PowerShell%20Gallery)![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/PSClock.png?style=for-the-badge&label=Downloads)
+
 ![logo](images/psclock.png)
 
-This module will create a WPF-based clock that runs on your Windows desktop. The clock runs in a background runspace. You can customize the clock's appearance including how you want to format the date and time. If you are running Windows, you can install the module from the PowerShell Gallery. It will work in both Windows PowerShell and PowerShell 7.
+This module will create a WPF-based clock launched from a PowerShell prompt that runs on your Windows desktop. The clock runs in a background PowerShell runspace so that it doesn't block. You can customize the clock's appearance including how you want to format the date and time. The clock background is transparent so all you see is formatted text.
+
+If you are running Windows, you can install the module from the PowerShell Gallery. It will work in both Windows PowerShell and PowerShell 7.
 
 ```powershell
 Install-Module PSClock [-scope currentuser]
@@ -12,13 +16,13 @@ Installing the module will also install the `ThreadJob` module if it isn't alrea
 
 ## [Start-PSClock](docs/Start-PSClock.md)
 
-Use this command, or the `psclock` alias to launch a PSClock.
+Use `Start-PSClock`, or the `psclock` alias to launch a PSClock.
 
 ```powershell
 Start-PSClock -size 24 -FontFamily 'Bahnschrift Light'
 ```
 
-The font size must be at least 8. You should have tab completion for the FontFamily and other font-related parameters.
+The font size must be at least 8. You should have tab completion for the `Color`, `FontFamily` and other font-related parameters.
 
 By default, the clock will be displayed on the center of your screen. You can click and drag the clock to reposition using the left mouse button. You might have to try a few times to "grab" the clock. You can close the clock with a right click or the `Stop-PSClock` command.
 
@@ -38,7 +42,7 @@ You can use `Save-PSClock` to export current clock settings to an xml file.
 Save-PSClock
 ```
 
-The file, PSClockSettings.xml, will be stored in $HOME. If the file is detected when you run `Start-PSClock`, the saved settings will be imported. If the file exists and you want to specify new settings, use the `-Force` parameter with `Start-PSClock`. This will not remove the saved settings file, only ignore it.
+The file, PSClockSettings.xml, will be stored in `$HOME`. If the file is detected when you run `Start-PSClock`, the saved settings will be imported. If the file exists and you want to specify new settings, use the `-Force` parameter with `Start-PSClock`. This will not remove the saved settings file, only ignore it.
 
 You need to manually delete the file if you no longer wish to use it.
 

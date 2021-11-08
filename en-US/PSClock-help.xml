@@ -78,6 +78,10 @@ RunspaceID      : 62</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3bT9QyZ</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
         <maml:linkText>Set-PSClock</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
@@ -196,6 +200,10 @@ RunspaceID      : 62</dev:code>
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3o7rlS6</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Start-PSClock</maml:linkText>
         <maml:uri></maml:uri>
@@ -507,6 +515,10 @@ RunspaceID      : 62</dev:code>
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3CUOnBS</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Start-PSClock</maml:linkText>
         <maml:uri></maml:uri>
@@ -847,6 +859,10 @@ RunspaceID      : 62</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3ES92Hh</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
         <maml:linkText>Set-PSClock</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
@@ -965,6 +981,10 @@ RunspaceID      : 62</dev:code>
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3C7ad3X</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Set-PSClock</maml:linkText>
         <maml:uri></maml:uri>

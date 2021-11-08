@@ -1,7 +1,7 @@
----
+﻿---
 external help file: PSClock-help.xml
 Module Name: PSClock
-online version:
+online version: https://bit.ly/3CUOnBS
 schema: 2.0.0
 ---
 

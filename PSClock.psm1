@@ -46,3 +46,6 @@ if ($IsWindows -OR ($PSEdition -eq 'desktop')) {
     }
 }
 
+if ($VerbosePreference -eq 'Continue') {
+    $VerbosePreference = 'SilentlyContinue'
+}

@@ -8,12 +8,16 @@ Function Save-PSClock {
         return
     }
 
-    $props = "DateFormat","Color","FontSize","FontWeight","FontFamily",
-    "FontStyle","OnTop",@{Name="Position";Expression = {$_.CurrentPosition}}
+    #define a list of properties to export
+    $props = @{Name="DateFormat";Expression={$_.Format}},"Color",
+    @{Name="FontSize";Expression={$_.Size}},
+    @{Name="FontWeight";Expression={$_.weight}},"FontFamily",
+    @{Name="FontStyle";Expression={$_.Style}},"OnTop",
+    @{Name="Position";Expression = {$_.CurrentPosition}}
 
     if ($global:PSClockSettings) {
         Write-Verbose "Saving PSClock settings to $SavePath"
-        $global:PSClockSettings | Select-Object -property $props | Export-Clixml -Path $SavePath
+        Get-PSClock | Select-Object -property $props | Export-Clixml -Path $SavePath
     }
     else {
         Write-Warning "Can't find a PSClock. Do you need to start one?"

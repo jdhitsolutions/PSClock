@@ -1,5 +1,12 @@
 # Changelog for PSClock
 
+## v0.9.1
+
++ Added online help links.
++ Updated module manifest to reset Verbose preference.
++ Fixed a bug in `Save-PSClock` that wasn't exporting all settings.
++ Updated `README.md`.
+
 ## v0.9.0
 
 + Added a module icon.
