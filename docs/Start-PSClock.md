@@ -238,3 +238,6 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 [Stop-PSClock](Stop-PSClock.md)
 
 [Save-PSClock](Save-PSClock.md)
+
+[Get-Date]()
+
