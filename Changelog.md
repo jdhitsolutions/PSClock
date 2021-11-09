@@ -1,9 +1,17 @@
 # Changelog for PSClock
 
+## v1.0.0
+
++ Fixed bad formatting in markdown help files.
++ Updated `README.md`.
++ Added `Design.md`.
++ General code cleanup.
++ Official release
+
 ## v0.9.1
 
 + Added online help links.
-+ Updated module manifest to reset Verbose preference.
++ Updated module manifest to reset Verbose preference. [Issue #1](https://github.com/jdhitsolutions/PSClock/issues/1)
 + Fixed a bug in `Save-PSClock` that wasn't exporting all settings.
 + Updated `README.md`.
 

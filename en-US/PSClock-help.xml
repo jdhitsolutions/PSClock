@@ -810,7 +810,7 @@ RunspaceID      : 62</dev:code>
     <command:inputTypes>
       <command:inputType>
         <dev:type>
-          <maml:name>None</maml:name>
+          <maml:name>String</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>

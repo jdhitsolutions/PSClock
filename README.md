@@ -16,7 +16,7 @@ Installing the module will also install the `ThreadJob` module if it isn't alrea
 
 ## [Start-PSClock](docs/Start-PSClock.md)
 
-Use `Start-PSClock`, or the `psclock` alias to launch a PSClock.
+Use `Start-PSClock` or the `psclock` alias to launch a PSClock.
 
 ```powershell
 Start-PSClock -size 24 -FontFamily 'Bahnschrift Light'
@@ -125,6 +125,10 @@ Running Format FontFamily           Size Weight Color Style  OnTop RunspaceID
 ------- ------ ----------           ---- ------ ----- -----  ----- ----------
 False     G    Baskerville Old Face   30 Normal white Normal False
 ```
+
+## Module Design
+
+For more details about the module design and technical implementation, read the [design document](Design.md).
 
 ## Known Issues
 
