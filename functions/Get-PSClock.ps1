@@ -3,18 +3,20 @@ Function Get-PSClock {
     [Outputtype("psclock")]
     Param()
 
+    #verify the OS. This should never be needed. Added as a failsafe.
     if ($IsLinux -OR $isMacOS) {
         Write-Warning "This command requires a Windows platform"
         return
     }
 
+    #gtest if there is a settings hashtable
     if ($global:PSClockSettings) {
-        #remove runspace if not running
+        #remove runspace setting if not running
         if ( -not ($global:PSClockSettings.running)) {
             $global:PSClockSettings.remove("Runspace")
         }
 
-        [psCustomObject]@{
+        [pscustomobject]@{
             PSTypeName      = "PSClock"
             Started         = $global:PSClockSettings.Started
             Format          = $global:PSClockSettings.DateFormat

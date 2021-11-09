@@ -130,6 +130,8 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                     $timer.isenabled = $False
                     $form.close()
                     $PSClockSettings.Running = $False
+
+                    #define a thread job to clean up the runspace
                     $cmd = {
                         Param([int]$ID)
                         $r = Get-Runspace -Id $id
@@ -137,6 +139,8 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                         $r.dispose()
                     }
                     Start-ThreadJob -ScriptBlock $cmd -ArgumentList $PSClockSettings.runspace.id
+
+                    #delete the flag file
                     if (Test-Path $env:temp\psclock-flag.txt) {
                         Remove-Item $env:temp\psclock-flag.txt
                     }
@@ -161,7 +165,7 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 $form.borderthickness = "1,1,1,1"
                 $form.VerticalAlignment = "top"
 
-                if ($PsclockSettings.StartingPosition) {
+                if ($PSClockSettings.StartingPosition) {
                     $form.left = $PSClockSettings.StartingPosition[0]
                     $form.top = $PSClockSettings.StartingPosition[1]
                 }
@@ -180,19 +184,26 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 #press + to increase the size and - to decrease
                 #the clock needs to refresh to see the result
                 $form.Add_KeyDown({
-                        switch ($_.key) {
-                            { 'Add', 'OemPlus' -contains $_ } {
-                                If ( $PSClockSettings.fontSize -ge 8) {
-                                    $PSClockSettings.fontSize++
-                                    $form.UpdateLayout()
-                                }
+                    switch ($_.key) {
+                        { 'Add', 'OemPlus' -contains $_ } {
+                            If ( $PSClockSettings.fontSize -ge 8) {
+                                $PSClockSettings.fontSize++
+                                $form.UpdateLayout()
                             }
-                            { 'Subtract', 'OemMinus' -contains $_ } {
-                                If ($PSClockSettings.FontSize -ge 8) {
-                                    $PSClockSettings.FontSize--
-                                    $form.UpdateLayout()
-                                }
+                        }
+                        { 'Subtract', 'OemMinus' -contains $_ } {
+                            If ($PSClockSettings.FontSize -ge 8) {
+                                $PSClockSettings.FontSize--
+                                $form.UpdateLayout()
                             }
+                        }
+                    }
+                })
+
+                    #fail safe to remove flag file
+                    $form.Add_Unloaded({
+                        if (Test-Path $env:temp\psclock-flag.txt) {
+                            Remove-Item $env:temp\psclock-flag.txt
                         }
                     })
 
@@ -204,7 +215,7 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 $label.HorizontalContentAlignment = "Center"
                 $label.Foreground = $PSClockSettings.Color
                 $label.FontStyle = $PSClockSettings.FontStyle
-                $label.FontWeight = $PSclockSettings.FontWeight
+                $label.FontWeight = $PSClockSettings.FontWeight
                 $label.FontSize = $PSClockSettings.FontSize
                 $label.FontFamily = $PSClockSettings.FontFamily
 
@@ -219,7 +230,7 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                         if ($PSClockSettings.Running) {
                             $label.Foreground = $PSClockSettings.Color
                             $label.FontStyle = $PSClockSettings.FontStyle
-                            $label.FontWeight = $PSclockSettings.FontWeight
+                            $label.FontWeight = $PSClockSettings.FontWeight
                             $label.FontSize = $PSClockSettings.FontSize
                             $label.FontFamily = $PSClockSettings.FontFamily
                             $label.Content = Get-Date -Format $PSClockSettings.DateFormat
@@ -229,7 +240,6 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
 
                             #$PSClockSettings.Window = $Form
                             $PSClockSettings.CurrentPosition = $form.left,$form.top
-
                         }
                         else {
                             _QuitClock
@@ -239,9 +249,8 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
 
                 $PSClockSettings.Running = $True
                 $PSClockSettings.Started = Get-Date
-                #$PSClockSettings.Window = $Form
-                $PsclockSettings.Top = $form.top
-                $PSClockSettings.Left = $form.left
+
+                #Show the clock form
                 [void]$form.ShowDialog()
             })
 
@@ -263,5 +272,3 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
     } #end
 
 } #close function
-
-

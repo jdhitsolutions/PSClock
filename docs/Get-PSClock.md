@@ -54,7 +54,6 @@ Style           : Normal
 OnTop           : False
 CurrentPosition : {1635, 1089}
 RunspaceID      : 62
-
 ```
 
 Get all details about the current clock.
