@@ -15,6 +15,7 @@ ForEach-Object {
 
 #the path for Save-PSClock
 $SavePath = Join-Path -Path $home -ChildPath PSClockSettings.xml
+
 Write-Verbose "Using save path $SavePath"
 
 #this module should never even run on a non-Windows platform.
@@ -40,8 +41,11 @@ if ($IsWindows -OR ($PSEdition -eq 'desktop')) {
         [System.Drawing.Brushes].GetProperties().name | Select-Object -Skip 1 |
         Where-Object { $_ -match "^$($WordToComplete)" } |
         ForEach-Object {
+            #show the color name using the color
+            $ansi = Get-RGB $_ | Convert-RGBtoAnsi
+            [string]$show = "$ansi$($_)$([char]27)[0m"
             # completion text,listitem text,result type,Tooltip
-            [System.Management.Automation.CompletionResult]::new("'$($_)'", $_, 'ParameterValue', $_)
+            [System.Management.Automation.CompletionResult]::new("'$($_)'", $show, 'ParameterValue', $_)
         }
     }
 }

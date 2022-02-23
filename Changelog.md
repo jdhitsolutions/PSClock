@@ -1,5 +1,15 @@
 # Changelog for PSClock
 
+## v1.1.0
+
++ Changed form title to "PSClock".
++ Updated `Start-PSClock` to allow user to delete the flag file if detected.
++ Updated module manifest.
++ Updated `Color` parameter auto completer for `Set-PSClock` to display values using the named color. Use `Ctrl+Space` to display the formatted list.
++ Updated `README.md`.
++ Added private functions `Convert-RGBtoAnsi` and `Get-RGB`.
++ Updated help documentation.
+
 ## v1.0.0
 
 + Fixed bad formatting in markdown help files.

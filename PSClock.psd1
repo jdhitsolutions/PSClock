@@ -4,12 +4,12 @@
 @{
 
     RootModule           = 'PSClock.psm1'
-    ModuleVersion        = '1.0.0'
+    ModuleVersion        = '1.1.0'
     CompatiblePSEditions = @('Desktop', 'Core')
     GUID                 = '668afa48-5176-4fd0-bd0f-e414155c6da3'
     Author               = 'Jeff Hicks'
     CompanyName          = 'JDH Information Technology Solutions, Inc.'
-    Copyright            = '2021 JDH Information Technology Solutions, Inc.'
+    Copyright            = '2021-2022 JDH Information Technology Solutions, Inc.'
     Description          = 'A set of PowerShell commands for creating and managing a WPF-based clock that runs on your Windows desktop.'
     PowerShellVersion    = '5.1'
     RequiredModules      = @('ThreadJob')

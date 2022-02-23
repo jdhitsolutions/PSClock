@@ -108,6 +108,12 @@ Set-PS Clock -size 30 -color white -FontFamily 'Baskerville Old Face'
 
 You can also increase the size by selecting the clock and use the <kbd>+</kbd> key. Decrease using the <kbd>-</kbd> key. Each change takes a second to be applied. You might need to "grab" the clock and move it slightly to ensure you have it selected.
 
+If you only want to change the color, you can use PSReadline to display a formatted list of color options. After the `-Color` parameter, press <kbd>Ctrl+Space</kbd> and anser `Y`.
+
+![psreadline completion](images/set-psclock-color.png)
+
+Move the cursor to your selected choice and press <kbd>Enter</kbd>.
+
 ## [Stop-PSClock](docs/Stop-PSClock.md)
 
 Use this command to stop a running PSClock from the PowerShell prompt.

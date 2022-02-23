@@ -35,7 +35,7 @@ PS C:\> Set-PSClock -size 28 -FontStyle Oblique -FontFamily 'Tahoma'
 
 ### -Color
 
-Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue.
+Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue. If you press Ctrl+Space after the paramter, you can use PSReadline to display options formatted in color.
 
 ```yaml
 Type: String

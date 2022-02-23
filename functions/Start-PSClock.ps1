@@ -47,7 +47,6 @@ Function Start-PSClock {
 
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
-
     } #begin
     Process {
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Validating"
@@ -72,7 +71,14 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
 
 "@
             Write-Warning $msg
-            Return
+            $r = Read-Host "Do you want to remove the flag file? Y/N"
+            if ($r -eq 'Y') {
+                Remove-Item $env:temp\psclock-flag.txt
+            }
+            else {
+                #bail out
+                Return
+            }
         }
 
         #verify the datetime format
@@ -85,6 +91,8 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
         }
 
         #Test if there is a saved settings file and no other parameters have been called
+        # $SavePath is a module-scoped variable set in the psm1 file
+        # $SavePath = Join-Path -Path $home -ChildPath PSClockSettings.xml
         if ((Test-Path $SavePath)-AND (-not $Force)) {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Using saved settings"
             $import = Import-Clixml -Path $SavePath
@@ -154,7 +162,7 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 to debug or troubleshoot
                 #>
 
-                $form.Title = "PSTimer"
+                $form.Title = "PSClock"
                 $form.Height = 200
                 $form.Width = 400
                 $form.SizeToContent = "WidthAndHeight"
@@ -260,7 +268,7 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
 
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Creating the flag file $env:temp\psclock-flag.txt"
         "[{0}] PSClock started by {1} under PowerShell process id $pid" -f (Get-Date), $env:USERNAME |
-        Out-File $env:temp\psclock-flag.txt
+        Out-File -filepath $env:temp\psclock-flag.txt
 
         if ($Passthru) {
             Start-Sleep -Seconds 1

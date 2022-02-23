@@ -245,7 +245,7 @@ RunspaceID      : 62</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Color</maml:name>
           <maml:description>
-            <maml:para>Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue.</maml:para>
+            <maml:para>Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue. If you press Ctrl+Space after the paramter, you can use PSReadline to display options formatted in color.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -362,7 +362,7 @@ RunspaceID      : 62</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Color</maml:name>
         <maml:description>
-          <maml:para>Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue.</maml:para>
+          <maml:para>Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue. If you press Ctrl+Space after the paramter, you can use PSReadline to display options formatted in color.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -876,6 +876,10 @@ RunspaceID      : 62</dev:code>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Save-PSClock</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Get-Date</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
