@@ -1,5 +1,9 @@
 # Changelog for PSClock
 
+## v1.2.0
+
++ Moved the `Color` parameter in `Set-PSColor` to the first position. __This is a minor breaking change__.
+
 ## v1.1.0
 
 + Changed form title to "PSClock".

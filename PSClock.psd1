@@ -2,9 +2,8 @@
 # Module manifest for module 'PSClock'
 
 @{
-
     RootModule           = 'PSClock.psm1'
-    ModuleVersion        = '1.1.0'
+    ModuleVersion        = '1.2.0'
     CompatiblePSEditions = @('Desktop', 'Core')
     GUID                 = '668afa48-5176-4fd0-bd0f-e414155c6da3'
     Author               = 'Jeff Hicks'
@@ -19,19 +18,13 @@
     VariablesToExport    = 'PSClockSettings'
     AliasesToExport      = 'psclock'
     PrivateData          = @{
-
         PSData = @{
-            Tags                     = @("clock", "wpf", "windows")
+            Tags                     = @("clock", "wpf", "windows","time")
             LicenseUri               = 'https://github.com/jdhitsolutions/PSClock/blob/main/LICENSE.txt'
             ProjectUri               = 'https://github.com/jdhitsolutions/PSClock'
             IconUri                  = 'https://raw.githubusercontent.com/jdhitsolutions/PSClock/master/images/psclock.png'
             RequireLicenseAcceptance = $false
-
-            # External dependent modules of this module
-            # ExternalModuleDependencies = @()
-
-        } # End of PSData hashtable
-
-    } # End of PrivateData hashtable
+        }
+    }
 }
 

@@ -3,7 +3,11 @@ Function Set-PSClock {
     [cmdletbinding(SupportsShouldProcess)]
     [OutputType("none")]
     Param(
-        [Parameter(Position = 0, HelpMessage = "Specify a .NET format string value like F, or G.",ValueFromPipelineByPropertyName)]
+        [Parameter(Position=0,HelpMessage = "Specify a font color like Green or an HTML code like '#FF1257EA'",ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Color,
+
+        [Parameter(Position = 1, HelpMessage = "Specify a .NET format string value like F, or G.",ValueFromPipelineByPropertyName)]
         [alias("format")]
         [ValidateNotNullOrEmpty()]
         [string]$DateFormat,
@@ -27,10 +31,6 @@ Function Set-PSClock {
         [ValidateNotNullOrEmpty()]
         [alias("family")]
         [string]$FontFamily,
-
-        [Parameter(HelpMessage = "Specify a font color like Green or an HTML code like '#FF1257EA'",ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()]
-        [string]$Color,
 
         [Parameter(HelpMessage = "Should the clock be on top of other applications?",ValueFromPipelineByPropertyName)]
         [switch]$OnTop,

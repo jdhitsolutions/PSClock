@@ -14,7 +14,7 @@ Modify a running PSClock.
 ## SYNTAX
 
 ```yaml
-Set-PSClock [[-DateFormat] <String>] [-FontSize <Int32>] [-FontStyle <String>] [-FontWeight <String>] [-FontFamily <String>] [-Color <String>] [-OnTop] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-PSClock [-Color <String>] [[-DateFormat] <String>] [-FontSize <Int32>] [-FontStyle <String>] [-FontWeight <String>] [-FontFamily <String>] [-OnTop] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,7 +35,7 @@ PS C:\> Set-PSClock -size 28 -FontStyle Oblique -FontFamily 'Tahoma'
 
 ### -Color
 
-Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue. If you press Ctrl+Space after the paramter, you can use PSReadline to display options formatted in color.
+Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue. If you press Ctrl+Space after the paramter, you can use PSReadline to display options formatted in the corresponding color.
 
 ```yaml
 Type: String
@@ -43,7 +43,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -75,7 +75,7 @@ Parameter Sets: (All)
 Aliases: format
 
 Required: False
-Position: 0
+Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -195,7 +195,6 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS

@@ -230,10 +230,10 @@ RunspaceID      : 62</dev:code>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Set-PSClock</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="format">
-          <maml:name>DateFormat</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
+          <maml:name>Color</maml:name>
           <maml:description>
-            <maml:para>Specify a .NET format string value like F, or G.</maml:para>
+            <maml:para>Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue. If you press Ctrl+Space after the paramter, you can use PSReadline to display options formatted in the corresponding color.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -242,10 +242,10 @@ RunspaceID      : 62</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-          <maml:name>Color</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="format">
+          <maml:name>DateFormat</maml:name>
           <maml:description>
-            <maml:para>Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue. If you press Ctrl+Space after the paramter, you can use PSReadline to display options formatted in color.</maml:para>
+            <maml:para>Specify a .NET format string value like F, or G.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -359,10 +359,10 @@ RunspaceID      : 62</dev:code>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
         <maml:name>Color</maml:name>
         <maml:description>
-          <maml:para>Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue. If you press Ctrl+Space after the paramter, you can use PSReadline to display options formatted in color.</maml:para>
+          <maml:para>Specify a font color like Green or an HTML code like '#FF1257EA'. You can also use any [System.Drawing.Brushes] color like Coral or SkyBlue. If you press Ctrl+Space after the paramter, you can use PSReadline to display options formatted in the corresponding color.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -383,7 +383,7 @@ RunspaceID      : 62</dev:code>
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="format">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="format">
         <maml:name>DateFormat</maml:name>
         <maml:description>
           <maml:para>Specify a .NET format string value like F, or G.</maml:para>
