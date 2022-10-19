@@ -136,6 +136,10 @@ False     G    Baskerville Old Face   30 Normal white Normal False
 
 For more details about the module design and technical implementation, read the [design document](Design.md).
 
+## Related Modules
+
+For a WPF-based countdown timer, take a look at the [Start-PSCountdownTimer](https://bit.ly/3T5ntz1) command in the [PSTimers](https://github.com/jdhitsolutions/PSTimers) module.
+
 ## Known Issues
 
 There are no known issues at this time. Please post any bugs or feature requests in the Issues section of this repository.
