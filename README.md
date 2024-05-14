@@ -141,7 +141,6 @@ This module also includes a font preview utility. Run `Show-FontPreview` to disp
 
 You can use the arrow keys or buttons to navigate through the fonts. Press <kbd>Ctrl+Q</kbd> to quit or manually close the form.
 
-```powershell
 ## Module Design
 
 For more details about the module design and technical implementation, read the [design document](Design.md).
