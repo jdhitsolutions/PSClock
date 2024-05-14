@@ -1,55 +1,78 @@
 Function Start-PSClock {
-    [cmdletbinding()]
+    [CmdletBinding()]
     [alias("psclock")]
     [OutputType("None", "PSClock")]
     Param(
-        [Parameter(Position = 0, HelpMessage = "Specify a .NET format string value like F, or G.", ValueFromPipelineByPropertyName)]
+        [Parameter(
+            Position = 0,
+            HelpMessage = "Specify a .NET format string value like F, or G.",
+            ValueFromPipelineByPropertyName
+        )]
         [alias("format")]
         [ValidateNotNullOrEmpty()]
-        [string]$DateFormat = "F",
+        [String]$DateFormat = "F",
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateScript({ $_ -gt 8 })]
         [alias("size")]
-        [int]$FontSize = 18,
+        [Int]$FontSize = 18,
 
-        [Parameter(HelpMessage = "Specify a font style.", ValueFromPipelineByPropertyName)]
+        [Parameter(
+            HelpMessage = "Specify a font style.",
+            ValueFromPipelineByPropertyName
+        )]
         [ValidateSet("Normal", "Italic", "Oblique")]
         [alias("style")]
-        [string]$FontStyle = "Normal",
+        [String]$FontStyle = "Normal",
 
-        [Parameter(HelpMessage = "Specify a font weight.", ValueFromPipelineByPropertyName)]
+        [Parameter(
+            HelpMessage = "Specify a font weight.",
+            ValueFromPipelineByPropertyName
+        )]
         [ValidateSet("Normal", "Bold", "Light")]
         [alias("weight")]
-        [string]$FontWeight = "Normal",
+        [String]$FontWeight = "Normal",
 
-        [Parameter(HelpMessage = "Specify a font color like Green or an HTML code like '#FF1257EA'", ValueFromPipelineByPropertyName)]
+        [Parameter(
+            HelpMessage = "Specify a font color like Green or an HTML code like '#FF1257EA'",
+            ValueFromPipelineByPropertyName
+        )]
         [ValidateNotNullOrEmpty()]
-        [string]$Color = "White",
+        [String]$Color = "White",
 
-        [Parameter(HelpMessage = "Specify a font family.", ValueFromPipelineByPropertyName)]
+        [Parameter(
+            HelpMessage = "Specify a font family.",
+            ValueFromPipelineByPropertyName
+        )]
         [ValidateNotNullOrEmpty()]
         [alias("family")]
-        [string]$FontFamily = "Segoi UI",
+        [String]$FontFamily = "Segoi UI",
 
-        [Parameter(HelpMessage = "Do you want the clock to always be on top?", ValueFromPipelineByPropertyName)]
-        [switch]$OnTop,
+        [Parameter(
+            HelpMessage = "Do you want the clock to always be on top?",
+            ValueFromPipelineByPropertyName
+        )]
+        [Switch]$OnTop,
 
-        [Parameter(HelpMessage = "Specify the clock position as an array of left and top values.", ValueFromPipelineByPropertyName)]
+        [Parameter(
+            HelpMessage = "Specify the clock position as an array of left and top values.",
+            ValueFromPipelineByPropertyName
+        )]
         [ValidateCount(2, 2)]
         [Int32[]]$Position,
 
         [Parameter(HelpMessage = "Force a new PSClock, ignoring any previously saved settings. The saved settings file will remain.")]
-        [switch]$Force,
+        [Switch]$Force,
 
-        [switch]$Passthru
+        [Switch]$PassThru
     )
 
     Begin {
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Starting $($MyInvocation.MyCommand)"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Running under PowerShell $($PSVersionTable.PSVersion)"
     } #begin
     Process {
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Validating"
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Validating"
         if ($IsLinux -OR $isMacOS) {
             Write-Warning "This command requires a Windows platform."
             return
@@ -81,7 +104,7 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
             }
         }
 
-        #verify the datetime format
+        #verify the DateTime format
         Try {
             [void](Get-Date -Format $DateFormat -ErrorAction Stop)
         }
@@ -94,15 +117,15 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
         # $SavePath is a module-scoped variable set in the psm1 file
         # $SavePath = Join-Path -Path $home -ChildPath PSClockSettings.xml
         if ((Test-Path $SavePath)-AND (-not $Force)) {
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Using saved settings"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Using saved settings"
             $import = Import-Clixml -Path $SavePath
-            foreach ($prop in $import.psobject.properties) {
-                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Using imported value for $($prop.name)"
+            foreach ($prop in $import.PSObject.properties) {
+                Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Using imported value for $($prop.name)"
                 Set-Variable -name $prop.name -value $prop.Value
             }
         }
 
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Building a synchronized hashtable"
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Building a synchronized hashtable"
         $global:PSClockSettings = [hashtable]::Synchronized(@{
                 DateFormat       = $DateFormat
                 FontSize         = $FontSize
@@ -114,7 +137,7 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 StartingPosition = $Position
                 CurrentPosition  = $Null
             })
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($global:PSClockSettings | Out-String)"
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($global:PSClockSettings | Out-String)"
         #Run the clock in a runspace
         $rs = [RunspaceFactory]::CreateRunspace()
         $rs.ApartmentState = "STA"
@@ -125,8 +148,8 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
 
         $rs.SessionStateProxy.SetVariable("PSClockSettings", $global:PSClockSettings)
 
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Defining the runspace command"
-        $psCmd = [PowerShell]::Create().AddScript({
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Defining the runspace command"
+        $PSCmd = [PowerShell]::Create().AddScript({
 
                 Add-Type -AssemblyName PresentationFramework -ErrorAction Stop
                 Add-Type -AssemblyName PresentationCore -ErrorAction Stop
@@ -135,13 +158,13 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 # a private function to stop the clock and clean up
                 Function _QuitClock {
                     $timer.stop()
-                    $timer.isenabled = $False
+                    $timer.IsEnabled = $False
                     $form.close()
                     $PSClockSettings.Running = $False
 
                     #define a thread job to clean up the runspace
                     $cmd = {
-                        Param([int]$ID)
+                        Param([Int]$ID)
                         $r = Get-Runspace -Id $id
                         $r.close()
                         $r.dispose()
@@ -167,10 +190,10 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 $form.Width = 400
                 $form.SizeToContent = "WidthAndHeight"
                 $form.AllowsTransparency = $True
-                $form.Topmost = $PSClockSettings.Ontop
+                $form.Topmost = $PSClockSettings.OnTop
 
                 $form.Background = "Transparent"
-                $form.borderthickness = "1,1,1,1"
+                $form.BorderThickness = "1,1,1,1"
                 $form.VerticalAlignment = "top"
 
                 if ($PSClockSettings.StartingPosition) {
@@ -235,24 +258,24 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 $timer = New-Object System.Windows.Threading.DispatcherTimer
                 $timer.Interval = [TimeSpan]"0:0:1.00"
                 $timer.Add_Tick({
-                        if ($PSClockSettings.Running) {
-                            $label.Foreground = $PSClockSettings.Color
-                            $label.FontStyle = $PSClockSettings.FontStyle
-                            $label.FontWeight = $PSClockSettings.FontWeight
-                            $label.FontSize = $PSClockSettings.FontSize
-                            $label.FontFamily = $PSClockSettings.FontFamily
-                            $label.Content = Get-Date -Format $PSClockSettings.DateFormat
+                    if ($PSClockSettings.Running) {
+                        $label.Foreground = $PSClockSettings.Color
+                        $label.FontStyle = $PSClockSettings.FontStyle
+                        $label.FontWeight = $PSClockSettings.FontWeight
+                        $label.FontSize = $PSClockSettings.FontSize
+                        $label.FontFamily = $PSClockSettings.FontFamily
+                        $label.Content = Get-Date -Format $PSClockSettings.DateFormat
 
-                            $form.TopMost = $PSClockSettings.OnTop
-                            $form.UpdateLayout()
+                        $form.TopMost = $PSClockSettings.OnTop
+                        $form.UpdateLayout()
 
-                            #$PSClockSettings.Window = $Form
-                            $PSClockSettings.CurrentPosition = $form.left,$form.top
-                        }
-                        else {
-                            _QuitClock
-                        }
-                    })
+                        #$PSClockSettings.Window = $Form
+                        $PSClockSettings.CurrentPosition = $form.left,$form.top
+                    }
+                    else {
+                        _QuitClock
+                    }
+                })
                 $timer.Start()
 
                 $PSClockSettings.Running = $True
@@ -262,21 +285,21 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 [void]$form.ShowDialog()
             })
 
-        $pscmd.runspace = $rs
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Launching the runspace"
-        [void]$pscmd.BeginInvoke()
+        $PSCmd.runspace = $rs
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Launching the runspace"
+        [void]$PSCmd.BeginInvoke()
 
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Creating the flag file $env:temp\psclock-flag.txt"
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Creating the flag file $env:temp\psclock-flag.txt"
         "[{0}] PSClock started by {1} under PowerShell process id $pid" -f (Get-Date), $env:USERNAME |
         Out-File -filepath $env:temp\psclock-flag.txt
 
-        if ($Passthru) {
+        if ($PassThru) {
             Start-Sleep -Seconds 1
             Get-PSClock
         }
     } #process
     End {
-        Write-Verbose "[$((Get-Date).TimeofDay) END    ] Ending $($myinvocation.mycommand)"
+        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Ending $($MyInvocation.MyCommand)"
     } #end
 
 } #close function

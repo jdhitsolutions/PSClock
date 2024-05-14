@@ -1,12 +1,12 @@
 #these are private functions
 
 function Get-RGB {
-    [cmdletbinding()]
+    [CmdletBinding()]
     [OutputType("RGB")]
     Param(
         [Parameter(Mandatory, HelpMessage = "Enter the name of a system color like Tomato")]
         [ValidateNotNullOrEmpty()]
-        [string]$Name
+        [String]$Name
     )
     Try {
         $Color = [System.Drawing.Color]::FromName($Name)
@@ -24,15 +24,15 @@ function Get-RGB {
 }
 function Convert-RGBtoAnsi {
     #This will write an opening ANSI escape sequence to the pipeline
-    [cmdletbinding()]
+    [CmdletBinding()]
     [OutputType("String")]
     Param(
         [parameter(Position = 0, ValueFromPipelineByPropertyName)]
-        [int]$Red,
+        [Int]$Red,
         [parameter(Position = 1, ValueFromPipelineByPropertyName)]
-        [int]$Green,
+        [Int]$Green,
         [parameter(Position = 2, ValueFromPipelineByPropertyName)]
-        [int]$Blue
+        [Int]$Blue
     )
     Process {
        "$([char]27)[38;2;{0};{1};{2}m" -f $red,$green,$blue

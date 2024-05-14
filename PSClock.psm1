@@ -1,16 +1,15 @@
-
 #Turn on additional verbose messaging when importing the module
 if ($MyInvocation.line -match "-verbose") {
     $VerbosePreference = "Continue"
-    $manifest = Import-PowerShellDataFile $PSScriptroot\PSClock.psd1
-    Write-Verbose "Importing module version $($manifest.moduleversion)"
+    $manifest = Import-PowerShellDataFile $PSScriptRoot\PSClock.psd1
+    Write-Verbose "Importing module version $($manifest.ModuleVersion)"
 }
 
 Write-Verbose "Sourcing functions: "
-Get-ChildItem -Path $PSScriptroot\functions\*.ps1 |
+Get-ChildItem -Path $PSScriptRoot\functions\*.ps1 |
 ForEach-Object {
-    Write-Verbose $_.Fullname
-    . $_.Fullname
+    Write-Verbose $_.FullName
+    . $_.FullName
 }
 
 #the path for Save-PSClock
@@ -29,7 +28,7 @@ if ($IsWindows -OR ($PSEdition -eq 'desktop')) {
         [System.Drawing.Text.InstalledFontCollection]::new().Families.Name |
         Where-Object { $_ -match "^$($WordToComplete)" } |
         ForEach-Object {
-            # completion text,listitem text,result type,Tooltip
+            # completion text,listItem text,result type,Tooltip
             [System.Management.Automation.CompletionResult]::new("'$($_)'", $_, 'ParameterValue', $_)
         }
     }
@@ -43,8 +42,8 @@ if ($IsWindows -OR ($PSEdition -eq 'desktop')) {
         ForEach-Object {
             #show the color name using the color
             $ansi = Get-RGB $_ | Convert-RGBtoAnsi
-            [string]$show = "$ansi$($_)$([char]27)[0m"
-            # completion text,listitem text,result type,Tooltip
+            [String]$show = "$ansi$($_)$([char]27)[0m"
+            # completion text,listItem text,result type,Tooltip
             [System.Management.Automation.CompletionResult]::new("'$($_)'", $show, 'ParameterValue', $_)
         }
     }

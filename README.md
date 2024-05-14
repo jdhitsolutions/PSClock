@@ -9,7 +9,7 @@ This module will create a WPF-based clock launched from a PowerShell prompt that
 If you are running Windows, you can install the module from the PowerShell Gallery. It will work in both Windows PowerShell and PowerShell 7.
 
 ```powershell
-Install-Module PSClock [-scope currentuser]
+Install-Module PSClock [-scope CurrentUser]
 ```
 
 Installing the module will also install the `ThreadJob` module if it isn't already installed.
@@ -22,11 +22,11 @@ Use `Start-PSClock` or the `psclock` alias to launch a PSClock.
 Start-PSClock -size 24 -FontFamily 'Bahnschrift Light'
 ```
 
-The font size must be at least 8. You should have tab completion for the `Color`, `FontFamily` and other font-related parameters.
+The font size must be at least 8. You should have tab completion for the `Color`, `FontFamily`, and other font-related parameters.
 
 By default, the clock will be displayed on the center of your screen. You can click and drag the clock to reposition using the left mouse button. You might have to try a few times to "grab" the clock. You can close the clock with a right click or the `Stop-PSClock` command.
 
-The command lets you specify any datetime format string. This is the same value you would use in a command like `Get-Date -format U`. Note that these strings are case-sensitive. See  https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings for more information.
+The command lets you specify any `DateTime` format string. This is the same value you would use in a command like `Get-Date -format U`. Note that these strings are case-sensitive. See  https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings for more information.
 
 ```powershell
 Start-PSClock -size 30 -Color Yellow -format G -FontFamily Verdana
@@ -36,7 +36,7 @@ Start-PSClock -size 30 -Color Yellow -format G -FontFamily Verdana
 
 ### [Save-PSClock](docs/Save-PSClock.md)
 
-You can use `Save-PSClock` to export current clock settings to an xml file.
+You can use `Save-PSClock` to export current clock settings to an XML file.
 
 ```powershell
 Save-PSClock
@@ -53,7 +53,7 @@ The clock runs in a separate runspace launched from your PowerShell session. If 
 The command is designed to only have one clock running at a time. If you try to start another clock from another PowerShell session, you will get a warning.
 
 ```dos
-PS C:\> start-psclock
+PS C:\> Start-PSClock
 WARNING:
 A running clock has been detected from another PowerShell session:
 
@@ -69,7 +69,8 @@ If you close PowerShell without properly shutting down the clock you may be left
 Use this command to get information about the current clock.
 
 ```dos
-PS C:\> Get-Clock
+PS C:\> Get-PSClock
+
 Running Format FontFamily Size Weight Color  Style  OnTop RunspaceID
 ------- ------ ---------- ---- ------ -----  -----  ----- ----------
 True      G    Verdana      30 Normal Yellow Normal False         28
@@ -101,16 +102,16 @@ The `Output` property is a sample using the specified format string.
 Use this command to modify the settings of a running PSClock.
 
 ```powershell
-Set-PS Clock -size 30 -color white -FontFamily 'Baskerville Old Face'
+Set-PSClock -size 30 -color white -FontFamily 'Baskerville Old Face'
 ```
 
 ![modify the clock](images/sample-3.png)
 
-You can also increase the size by selecting the clock and use the <kbd>+</kbd> key. Decrease using the <kbd>-</kbd> key. Each change takes a second to be applied. You might need to "grab" the clock and move it slightly to ensure you have it selected.
+You can also increase the size by selecting the clock and using the <kbd>+</kbd> key. Decrease using the <kbd>-</kbd> key. Each change takes a second to be applied. You might need to "grab" the clock and move it slightly to ensure you have it selected.
 
-If you only want to change the color, you can use PSReadline to display a formatted list of color options. After the `-Color` parameter, press <kbd>Ctrl+Space</kbd> and anser `Y`.
+If you only want to change the color, you can use PSReadLine to display a formatted list of color options. After the `-Color` parameter, press <kbd>Ctrl+Space</kbd> and answer `Y`.
 
-![psreadline completion](images/set-psclock-color.png)
+![PSReadLine completion](images/set-psclock-color.png)
 
 Move the cursor to your selected choice and press <kbd>Enter</kbd>.
 
@@ -122,7 +123,7 @@ Use this command to stop a running PSClock from the PowerShell prompt.
 Stop-PSClock
 ```
 
-You can also right-click the clock to dismiss it, or close and remove the runpace it is using. You can still use `Get-PSClock` which should now reflect that a clock is not running.
+You can also right-click the clock to dismiss it, or close and remove the runspace it is using. You can still use `Get-PSClock` which should now reflect that a clock is not running.
 
 ```dos
 PS C:\> Get-PSClock
@@ -132,6 +133,15 @@ Running Format FontFamily           Size Weight Color Style  OnTop RunspaceID
 False     G    Baskerville Old Face   30 Normal white Normal False
 ```
 
+## Font Preview
+
+This module also includes a font preview utility. Run `Show-FontPreview` to display a WPF form that will let you preview different fonts.
+
+![font preview](images/show-fontpreview.png)
+
+You can use the arrow keys or buttons to navigate through the fonts. Press <kbd>Ctrl+Q</kbd> to quit or manually close the form.
+
+```powershell
 ## Module Design
 
 For more details about the module design and technical implementation, read the [design document](Design.md).

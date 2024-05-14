@@ -1,22 +1,25 @@
 Function Get-PSClock {
-    [cmdletbinding()]
-    [Outputtype("psclock")]
+    [CmdletBinding()]
+    [OutputType("PSClock")]
+    [Alias("gpc")]
     Param()
 
+    Write-Verbose "Starting $($MyInvocation.MyCommand)"
+    Write-Verbose "Running under PowerShell $($PSVersionTable.PSVersion)"
     #verify the OS. This should never be needed. Added as a failsafe.
     if ($IsLinux -OR $isMacOS) {
         Write-Warning "This command requires a Windows platform"
         return
     }
 
-    #gtest if there is a settings hashtable
+    #test if there is a settings hashtable
     if ($global:PSClockSettings) {
         #remove runspace setting if not running
         if ( -not ($global:PSClockSettings.running)) {
             $global:PSClockSettings.remove("Runspace")
         }
 
-        [pscustomobject]@{
+        [PSCustomObject]@{
             PSTypeName      = "PSClock"
             Started         = $global:PSClockSettings.Started
             Format          = $global:PSClockSettings.DateFormat
@@ -35,4 +38,6 @@ Function Get-PSClock {
     Else {
         Write-Warning "Can't find a PSClock. Do you need to start one?"
     }
+
+    Write-Verbose "Ending $($MyInvocation.MyCommand)"
 }

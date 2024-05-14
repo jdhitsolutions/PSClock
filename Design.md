@@ -21,7 +21,7 @@ $stack.AddChild($label)
 $form.AddChild($stack)
 ```
 
-The values to customize the appearance such as font style and color are passed as function parameters and then on to the form. Note that the code is defining some settings that aren't visible. But they remain for troublshooting or debug purposes should I need them.
+The values to customize the appearance such as font style and color are passed as function parameters and then on to the form. Note that the code is defining some settings that aren't visible. But they remain for troubleshooting or debug purposes should I need them.
 
 ### Adding a Timer
 
@@ -91,13 +91,13 @@ $rs.Open()
 All of the code that creates the form is added to the runspace.
 
 ```powershell
-$psCmd = [PowerShell]::Create().AddScript({
+PSCmd = [PowerShell]::Create().AddScript({
     #PowerShell code
 })
 #assign the command to the runspace
-$pscmd.runspace = $rs
+PSCmd.runspace = $rs
 #launch the runspace
-[void]$pscmd.BeginInvoke()
+[void]PSCmd.BeginInvoke()
 ```
 
 During development, I ran the WPF code directly in PowerShell. Only after I was satisfied with the results did I move it to the runspace.
@@ -164,7 +164,6 @@ if ($PSClockSettings.Running) {
     $form.TopMost = $PSClockSettings.OnTop
     $form.UpdateLayout()
 
-    #$PSClockSettings.Window = $Form
     $PSClockSettings.CurrentPosition = $form.left,$form.top
 }
 ```
@@ -192,7 +191,7 @@ DateFormat                     F
 
 ### Set-PSClock
 
-But I didn' want to have to manually update the hashtable if I wanted to modify the clock so `Set-PSClock` updates the hashtable. Using a function means I can document it and include features like `-WhatIf`.
+Because I didn't want to have to manually update the hashtable if I wanted to modify the clock, I `Set-PSClock` updates the hashtable. Using a function means I can document it and include features like `-WhatIf`.
 
 ```powershell
  $settings = "FontSize", "FontStyle", "FontWeight", "Color", "OnTop", "DateFormat", "FontFamily"
@@ -202,7 +201,7 @@ But I didn' want to have to manually update the hashtable if I wanted to modify 
                 $value = $PSBoundParameters[$setting]
                 $action = "Setting value to $value"
                 Write-Verbose "Setting $setting to $value"
-                if ($PSCmdlet.ShouldProcess($setting, $action)) {
+                if (PSCmdlet.ShouldProcess($setting, $action)) {
                     $Global:PSClockSettings[$setting] = $Value
                 }
             }
@@ -229,7 +228,7 @@ PS C:\> Get-Runspace -id 11
 
 When the clock is closed, the runspace will remain. This is not necessarily a bad thing. Once you close your PowerShell session, the runspaces will be removed. But I wanted a cleaner way to clean up when a clock is closed.
 
-In my event handler connected to quitting, I create a ThreadJob. This is similar to a PowerShell background job excepts it runs in the current thread. It doesn't create a new runspace. I have the runspace ID from the synchronized hashtable so I can start a new threadjob like this:
+In my event handler connected to quitting, I create a ThreadJob. This is similar to a PowerShell background job excepts it runs in the current thread. It doesn't create a new runspace. I have the runspace ID from the synchronized hashtable so I can start a new ThreadJob like this:
 
 ```powershell
  #define a thread job to clean up the runspace
@@ -282,7 +281,11 @@ In a different PowerShell session you'll get a result like this:
 PS C:\> Start-PSClock
 
 WARNING:
-A running clock has been detected from another PowerShell session:                                                                                                                                                        [11/9/2021 8:22:57 AM] PSClock started by Jeff under PowerShell process id 33316                                                                                                                                                           If this is incorrect, delete C:\Users\Jeff\AppData\Local\Temp\psclock-flag.txt and try again.
+A running clock has been detected from another PowerShell session:
+
+[11/9/2021 8:22:57 AM] PSClock started by Jeff under PowerShell process id 33316
+
+If this is incorrect, delete C:\Users\Jeff\AppData\Local\Temp\psclock-flag.txt and try again.
 ```
 
 The `_Quit` private function in `Start-PSClock` should delete this file.
@@ -306,7 +309,7 @@ if ($PSClockSettings.Running) {
 
 ## Save-PSClock
 
-One of the design goals was to make it easy to start a clock using the last used settings. Granted, it wouldn't be that difficult to add a `Start-PSClock` command to a PowerShell profile script with all the parameters. But, I'd have to modify the profile script everytime I decided to tweak a setting. Instead, `Save-PSClock` will export key properties to an XML file using `Export-Clixml`.
+One of the design goals was to make it easy to start a clock using the last used settings. Granted, it wouldn't be that difficult to add a `Start-PSClock` command to a PowerShell profile script with all the parameters. But, I'd have to modify the profile script every time I decided to tweak a setting. Instead, `Save-PSClock` will export key properties to an XML file using `Export-Clixml`.
 
 In the module file, a module-scoped variable is defined for the export path.
 
@@ -314,7 +317,7 @@ In the module file, a module-scoped variable is defined for the export path.
 $SavePath = Join-Path -Path $home -ChildPath PSClockSettings.xml
 ```
 
-The `PSClockSettings.xml` will be stored in `$HOME`. Because I'm going to use the values from the `$PSClockSettings` synchronized hashatable with `Start-PSClock`, I need to "align" the property names.
+The `PSClockSettings.xml` will be stored in `$HOME`. Because I'm going to use the values from the `$PSClockSettings` synchronized hashtable with `Start-PSClock`, I need to "align" the property names.
 
 ```powershell
 $props = @{Name="DateFormat";Expression={$_.Format}},"Color",
@@ -334,10 +337,10 @@ In `Start-PSClock`, there is a test for the xml file. If found, it is imported a
 
 ```powershell
 if ((Test-Path $SavePath)-AND (-not $Force)) {
-    Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Using saved settings"
+    Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Using saved settings"
     $import = Import-Clixml -Path $SavePath
-    foreach ($prop in $import.psobject.properties) {
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Using imported value for $($prop.name)"
+    foreach ($prop in $import.PSObject.properties) {
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Using imported value for $($prop.name)"
         Set-Variable -name $prop.name -value $prop.Value
     }
 }
@@ -349,10 +352,10 @@ The initial design concept was that if the user specified any parameter value, t
 
 ## Formatting
 
-The only true object that this module generates is from `Get-PSClock`. This function makes it easier to interact with the `$PSClockSettings` synchronzed hashtable. Instead of writing a hashtable to the pipeline, the command creates a custom object.
+The only true object that this module generates is from `Get-PSClock`. This function makes it easier to interact with the `$PSClockSettings` synchronized hashtable. Instead of writing a hashtable to the pipeline, the command creates a custom object.
 
 ```powershell
-[pscustomobject]@{
+[PSCustomObject]@{
         PSTypeName      = "PSClock"
         Started         = $global:PSClockSettings.Started
         Format          = $global:PSClockSettings.DateFormat
@@ -449,7 +452,7 @@ Register-ArgumentCompleter -CommandName 'Start-PSClock', 'Set-PSClock' -Paramete
 }
 ```
 
-The scriptblock gets values from the .NET Framework and pipes to `Where-Object` so that I can use the `$WordtoComplete` variable which allows me to start typing part of a value and then press tab.
+The script block gets values from the .NET Framework and pipes to `Where-Object` so that I can use the `$WordToComplete` variable which allows me to start typing part of a value and then press tab.
 
 For example, I can type `r` as a value for `FontFamily` then press <kbd>tab</kbd> to see all the possible values.
 
