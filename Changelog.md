@@ -1,7 +1,11 @@
 # Changelog for PSClock
 
 ## [Unreleased]
+
+## [1.4.0] - 2024-05-21
+
 ### Added
+
 - Added parameter `SampleText` to `Show-FontPreview`.
 - Added parameter `CurrentPosition` with an alias of `Position` to `Set-PSClock`.
 - Added command `Get-PrimaryDisplaySize`.
@@ -10,6 +14,7 @@
 - Added the function `Show-PSClockSettingPreview` to configure PSClock settings with a WPF-based GUI.
 
 ### Changed
+
 - Modified `Start-PSClock` to temporarily pause the dispatch timer if grabbing and moving the clock.
 - Updated `Design.md`.
 - Modified `FontWeight` default values to be a more complete set of: 'Normal', 'Bold', 'Light', 'Medium', 'SemiBold'.
@@ -85,7 +90,8 @@
 
 - Initial module setup.
 
-[Unreleased]: https://github.com/jdhitsolutions/PSClock/compare/..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSClock/compare/v1.4.0..HEAD
+[1.4.0]: https://github.com/jdhitsolutions/PSClock/compare/vv1.3.0..v1.4.0
 [v1.3.0]: https://github.com/jdhitsolutions/PSClock/compare/v1.2.0..v1.3.0
 [v1.2.0]: https://github.com/jdhitsolutions/PSClock/compare/v1.1.0..v1.2.0
 [v1.1.0]: https://github.com/jdhitsolutions/PSClock/compare/v1.0.0..v1.1.0
