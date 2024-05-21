@@ -17,7 +17,7 @@ Function Set-PSClock {
             HelpMessage = "Specify a .NET format string value like F, or G.",
             ValueFromPipelineByPropertyName
         )]
-        [alias("format")]
+        [alias("Format")]
         [ValidateNotNullOrEmpty()]
         [String]$DateFormat,
 
@@ -26,7 +26,7 @@ Function Set-PSClock {
             ValueFromPipelineByPropertyName
         )]
         [ValidateScript({ $_ -gt 8 })]
-        [alias("size")]
+        [alias("Size")]
         [Int]$FontSize,
 
         [Parameter(
@@ -34,15 +34,15 @@ Function Set-PSClock {
             ValueFromPipelineByPropertyName
         )]
         [ValidateSet("Normal", "Italic", "Oblique")]
-        [alias("style")]
+        [alias("Style")]
         [String]$FontStyle,
 
         [Parameter(
             HelpMessage = "Specify a font weight.",
             ValueFromPipelineByPropertyName
         )]
-        [ValidateSet("Normal", "Bold", "Light")]
-        [alias("weight")]
+        [ValidateSet('Normal', 'Bold', 'Light', 'Medium', 'SemiBold')]
+        [alias("Weight")]
         [String]$FontWeight,
 
         [Parameter(
@@ -50,7 +50,7 @@ Function Set-PSClock {
             ValueFromPipelineByPropertyName
         )]
         [ValidateNotNullOrEmpty()]
-        [alias("family")]
+        [alias("Family")]
         [String]$FontFamily,
 
         [Parameter(
@@ -59,10 +59,18 @@ Function Set-PSClock {
         )]
         [Switch]$OnTop,
 
+        [Parameter(
+            HelpMessage = "Specify an array of (X,Y) coordinates for the clock position."
+        )]
+        [ValidateNotNullOrEmpty()]
+        [ValidateCount(2,2)]
+        [alias("Position")]
+        [Double[]]$CurrentPosition,
+
         [Switch]$PassThru
     )
 
-    Write-Verbose "Starting ($MyInvocation.MyCommand)"
+    Write-Verbose "Starting $($MyInvocation.MyCommand)"
     Write-Verbose "Running under PowerShell $($PSVersionTable.PSVersion)"
 
     if ($IsLinux -OR $isMacOS) {
@@ -70,7 +78,7 @@ Function Set-PSClock {
         return
     }
 
-    $settings = "FontSize", "FontStyle", "FontWeight", "Color", "OnTop", "DateFormat", "FontFamily"
+    $settings = "FontSize", "FontStyle", "FontWeight", "Color", "OnTop", "DateFormat", "FontFamily","CurrentPosition"
     if ($PSClockSettings -And $PSClockSettings.Running) {
         Foreach ($setting in $settings) {
             if ($PSBoundParameters.ContainsKey($setting)) {
@@ -92,6 +100,6 @@ Function Set-PSClock {
         Write-Warning "Can't find a running clock. Do you need to start one?"
     }
 
-    Write-Verbose "Ending ($MyInvocation.MyCommand)"
+    Write-Verbose "Ending $($MyInvocation.MyCommand)"
 }
 

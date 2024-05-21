@@ -2,6 +2,87 @@
 <helpItems schema="maml" xmlns="http://msh">
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Get-PrimaryDisplaySize</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PrimaryDisplaySize</command:noun>
+      <maml:description>
+        <maml:para>Get the primary display size in pixels.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>When positioning the PSClock, or any WPF form, you might need to know the dimension of your display.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PrimaryDisplaySize</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSPrimaryDisplaySize</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PrimaryDisplaySize
+
+  Width Height WorkArea
+  ----- ------ --------
+1536.00 864.00 0,0,1536,816</dev:code>
+        <dev:remarks>
+          <maml:para>These values are different than $host.UI.RawUI.WindowSize.Width and $host.UI.RawUI.WindowSize.Height. The $host values are dimensions of the console window, not the display screen.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PrimaryDisplaySize | Select-Object -ExpandProperty WorkArea
+
+IsEmpty     : False
+Location    : 0,0
+Size        : 1536,816
+X           : 0
+Y           : 0
+Width       : 1536
+Height      : 816
+Left        : 0
+Top         : 0
+Right       : 1536
+Bottom      : 816
+TopLeft     : 0,0
+TopRight    : 1536,0
+BottomLeft  : 0,816
+BottomRight : 1536,816</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Get-PSClock</command:name>
       <command:verb>Get</command:verb>
       <command:noun>PSClock</command:noun>
@@ -46,7 +127,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt;  PS C:\&gt; get-psclock
+        <dev:code>PS C:\&gt; Get-PSClock
 
 Running Format FontFamily Size Weight Color  Style  OnTop RunspaceID
 ------- ------ ---------- ---- ------ -----  -----  ----- ----------
@@ -57,11 +138,11 @@ True      F    Segoi UI     30 Normal yellow Normal False         62</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; PS C:\&gt; get-psclock | Select *
+        <dev:code>PS C:\&gt; Get-PSClock | Select *
 
-Started         : 11/7/2021 4:18:30 PM
+Started         : 11/7/2023 4:18:30 PM
 Format          : F
-Output          : Sunday, November 7, 2021 4:26:18 PM
+Output          : Tuesday, November 7, 2023 4:26:18 PM
 Running         : True
 FontFamily      : Segoi UI
 Size            : 30
@@ -292,7 +373,7 @@ RunspaceID      : 62</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="style">
           <maml:name>FontStyle</maml:name>
           <maml:description>
-            <maml:para>Specify a font style.</maml:para>
+            <maml:para>Specify a font style. Accepted values: Normal, Italic, Oblique</maml:para>
           </maml:description>
           <command:parameterValueGroup>
             <command:parameterValue required="false" command:variableLength="false">Normal</command:parameterValue>
@@ -309,12 +390,14 @@ RunspaceID      : 62</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="weight">
           <maml:name>FontWeight</maml:name>
           <maml:description>
-            <maml:para>Specify a font weight.</maml:para>
+            <maml:para>Specify a font weight. Accepted values: 'Normal', 'Bold', 'Light', 'Medium', 'SemiBold'</maml:para>
           </maml:description>
           <command:parameterValueGroup>
-            <command:parameterValue required="false" command:variableLength="false">Normal</command:parameterValue>
-            <command:parameterValue required="false" command:variableLength="false">Bold</command:parameterValue>
-            <command:parameterValue required="false" command:variableLength="false">Light</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">'Normal'</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">'Bold'</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">'Light'</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">'Medium'</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">'SemiBold'</command:parameterValue>
           </command:parameterValueGroup>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -334,10 +417,10 @@ RunspaceID      : 62</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Passthru</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
           <maml:description>
-            <maml:para></maml:para>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -345,10 +428,22 @@ RunspaceID      : 62</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
-          <maml:name>WhatIf</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Position">
+          <maml:name>CurrentPosition</maml:name>
           <maml:description>
-            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+            <maml:para>Specify an array of (X,Y) coordinates for the clock position. Use Get-PrimaryDisplaySize to determine the values.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Double[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Double[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
+            <maml:para></maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -422,7 +517,7 @@ RunspaceID      : 62</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="style">
         <maml:name>FontStyle</maml:name>
         <maml:description>
-          <maml:para>Specify a font style.</maml:para>
+          <maml:para>Specify a font style. Accepted values: Normal, Italic, Oblique</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -434,7 +529,7 @@ RunspaceID      : 62</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="weight">
         <maml:name>FontWeight</maml:name>
         <maml:description>
-          <maml:para>Specify a font weight.</maml:para>
+          <maml:para>Specify a font weight. Accepted values: 'Normal', 'Bold', 'Light', 'Medium', 'SemiBold'</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -455,10 +550,10 @@ RunspaceID      : 62</dev:code>
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Passthru</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
         <maml:description>
-          <maml:para></maml:para>
+          <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -467,10 +562,22 @@ RunspaceID      : 62</dev:code>
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
-        <maml:name>WhatIf</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Position">
+        <maml:name>CurrentPosition</maml:name>
         <maml:description>
-          <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          <maml:para>Specify an array of (X,Y) coordinates for the clock position. Use Get-PrimaryDisplaySize to determine the values.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Double[]</command:parameterValue>
+        <dev:type>
+          <maml:name>Double[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
+          <maml:para></maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -513,11 +620,22 @@ RunspaceID      : 62</dev:code>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
+      <command:example>
+        <maml:title>--------------------------- Example ---------------------------</maml:title>
+        <dev:code>PS C:\&gt; Set-PSClock -size 35 -Position 500,100</dev:code>
+        <dev:remarks>
+          <maml:para>Adjust the font size and clock position. This example is using the Position parameter alias.</maml:para>
+        </dev:remarks>
+      </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://bit.ly/3CUOnBS</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Show-PSClockSettingPreview</maml:linkText>
+        <maml:uri></maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Start-PSClock</maml:linkText>
@@ -552,6 +670,103 @@ RunspaceID      : 62</dev:code>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Show-FontPreview</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>SampleText</maml:name>
+          <maml:description>
+            <maml:para>The default text to display.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$(Get-Date -Format F)</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>SampleText</maml:name>
+        <maml:description>
+          <maml:para>The default text to display.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$(Get-Date -Format F)</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Show-FontPreview</dev:code>
+        <dev:remarks>
+          <maml:para>Your prompt will be blocked until you close the form. This will display the default sample text from Get-Date -Format F.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Show-FontPreview -Verbose -SampleText (Get-Date -Format D)</dev:code>
+        <dev:remarks>
+          <maml:para>Launch the preview form with the current date displayed. You can always modify the text in the text box.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Set-PSClock</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Show-PSClockSettingPreview</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Show-PSClockSettingPreview</command:name>
+      <command:verb>Show</command:verb>
+      <command:noun>PSClockSettingPreview</command:noun>
+      <maml:description>
+        <maml:para>Show a GUI preview of PSClock settings</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Use this command to display a GUI preview of the settings that can be applied to a PSClock. The preview text will adjust to the selected font family, weight, style, color and size. Changes will be reflected in the preview box. Click the Apply button to commit the changes to the current clock. If you don't want to apply any changes, close the form. The form elements have tooltips to help you understand what each setting does. Hover your mouse over the element to see the tooltip.</maml:para>
+      <maml:para>You can also invoke this command by selecting the PSClock and pressing 'p'.</maml:para>
+      <maml:para>If you have a running clock, the form will default to the current clock settings. If you don't have a running clock, the form will use the default settings from Start-PSClock.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Show-PSClockSettingPreview</maml:name>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters />
@@ -577,13 +792,13 @@ RunspaceID      : 62</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Show-FontPreview</dev:code>
+        <dev:code>PS C:\&gt; Show-PSClockSettingPreview</dev:code>
         <dev:remarks>
           <maml:para>Your prompt will be blocked until you close the form.</maml:para>
         </dev:remarks>
@@ -666,7 +881,7 @@ RunspaceID      : 62</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="style">
           <maml:name>FontStyle</maml:name>
           <maml:description>
-            <maml:para>Specify a font style.</maml:para>
+            <maml:para>Specify a font style. Accepted values: Normal, Italic, Oblique</maml:para>
           </maml:description>
           <command:parameterValueGroup>
             <command:parameterValue required="false" command:variableLength="false">Normal</command:parameterValue>
@@ -683,12 +898,14 @@ RunspaceID      : 62</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="weight">
           <maml:name>FontWeight</maml:name>
           <maml:description>
-            <maml:para>Specify a font weight.</maml:para>
+            <maml:para>Specify a font weight. Accepted values: 'Normal', 'Bold', 'Light', 'Medium', 'SemiBold'</maml:para>
           </maml:description>
           <command:parameterValueGroup>
-            <command:parameterValue required="false" command:variableLength="false">Normal</command:parameterValue>
-            <command:parameterValue required="false" command:variableLength="false">Bold</command:parameterValue>
-            <command:parameterValue required="false" command:variableLength="false">Light</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">'Normal'</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">'Bold'</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">'Light'</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">'Medium'</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">'SemiBold'</command:parameterValue>
           </command:parameterValueGroup>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -796,7 +1013,7 @@ RunspaceID      : 62</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="style">
         <maml:name>FontStyle</maml:name>
         <maml:description>
-          <maml:para>Specify a font style.</maml:para>
+          <maml:para>Specify a font style. Accepted values: Normal, Italic, Oblique</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -808,7 +1025,7 @@ RunspaceID      : 62</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="weight">
         <maml:name>FontWeight</maml:name>
         <maml:description>
-          <maml:para>Specify a font weight.</maml:para>
+          <maml:para>Specify a font weight. Accepted values: 'Normal', 'Bold', 'Light', 'Medium', 'SemiBold'</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>

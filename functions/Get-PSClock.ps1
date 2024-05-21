@@ -6,6 +6,7 @@ Function Get-PSClock {
 
     Write-Verbose "Starting $($MyInvocation.MyCommand)"
     Write-Verbose "Running under PowerShell $($PSVersionTable.PSVersion)"
+
     #verify the OS. This should never be needed. Added as a failsafe.
     if ($IsLinux -OR $isMacOS) {
         Write-Warning "This command requires a Windows platform"

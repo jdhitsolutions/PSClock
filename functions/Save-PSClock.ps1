@@ -4,6 +4,7 @@ Function Save-PSClock {
 
     Write-Verbose "Starting $($MyInvocation.MyCommand)"
     Write-Verbose "Running under PowerShell $($PSVersionTable.PSVersion)"
+
     if ($IsLinux -OR $isMacOS) {
         Write-Warning "This command requires a Windows platform"
         return

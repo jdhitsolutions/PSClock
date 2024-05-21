@@ -73,6 +73,10 @@ $form.Add_KeyDown({
                 $form.UpdateLayout()
             }
         }
+        { 'P' -contains $_ } {
+            #show the preview settings form
+            Show-PSClockSettingPreview
+            }
     }
 })
 ```
@@ -469,7 +473,7 @@ Some of the parameters in `Start-PSClock` have parameter validation using `Valid
 [string]$FontStyle = "Normal",
 ```
 
-This too provide an auto-completion experience.
+This too, provides an auto-completion experience.
 
 ## Learn More
 

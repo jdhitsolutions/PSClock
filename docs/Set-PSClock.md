@@ -13,8 +13,9 @@ Modify a running PSClock.
 
 ## SYNTAX
 
-```yaml
-Set-PSClock [-Color <String>] [[-DateFormat] <String>] [-FontSize <Int32>] [-FontStyle <String>] [-FontWeight <String>] [-FontFamily <String>] [-OnTop] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+Set-PSClock [[-Color] <String>] [[-DateFormat] <String>] [-FontSize <Int32>] [-FontStyle <String>]
+ [-FontWeight <String>] [-FontFamily <String>] [-OnTop] [-CurrentPosition <Double[]>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,6 +31,13 @@ If you want to change the position, left-click and drag to re-position.
 ```powershell
 PS C:\> Set-PSClock -size 28 -FontStyle Oblique -FontFamily 'Tahoma'
 ```
+
+### Example
+
+```powershell
+PS C:\> Set-PSClock -size 35 -Position 500,100
+```
+Adjust the font size and clock position. This example is using the Position parameter alias.
 
 ## PARAMETERS
 
@@ -115,7 +123,7 @@ Accept wildcard characters: False
 
 ### -FontStyle
 
-Specify a font style.
+Specify a font style. Accepted values: Normal, Italic, Oblique
 
 ```yaml
 Type: String
@@ -132,13 +140,13 @@ Accept wildcard characters: False
 
 ### -FontWeight
 
-Specify a font weight.
+Specify a font weight. Accepted values: 'Normal', 'Bold', 'Light', 'Medium', 'SemiBold'
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases: weight
-Accepted values: Normal, Bold, Light
+Accepted values: 'Normal', 'Bold', 'Light', 'Medium', 'SemiBold'
 
 Required: False
 Position: Named
@@ -163,20 +171,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Passthru
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -WhatIf
 
 Shows what would happen if the cmdlet runs.
@@ -186,6 +180,35 @@ The cmdlet is not run.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CurrentPosition
+Specify an array of (X,Y) coordinates for the clock position. Use Get-PrimaryDisplaySize to determine the values.
+
+```yaml
+Type: Double[]
+Parameter Sets: (All)
+Aliases: Position
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PassThru
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -210,6 +233,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
 
 ## RELATED LINKS
+
+[Show-PSClockSettingPreview](Show-PSClockSettingPreview.md)
 
 [Start-PSClock](Start-PSClock.md)
 

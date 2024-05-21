@@ -1,5 +1,3 @@
-#requires -version 5.1
-
 if ($IsWindows -OR $PSEdition -eq 'desktop') {
     Try {
         Add-Type -AssemblyName PresentationFramework -ErrorAction Stop
@@ -20,16 +18,23 @@ else {
 
 Function Show-FontPreview {
     [CmdletBinding()]
-    Param()
+    Param(
+        [Parameter(Position = 0, HelpMessage = "The default text to display")]
+        [string]$SampleText = $(Get-Date -Format F)
+    )
 
+    Write-Verbose "Starting $($MyInvocation.MyCommand)"
+    Write-Verbose "Running under PowerShell $($PSVersionTable.PSVersion)"
+    Write-Verbose "Loading font families"
     $Families = [System.Drawing.text.installedFontCollection]::new().Families
 
     $defaultText = @"
 
-$(Get-Date -Format F)
+$sampleText
 
 "@
-
+    Write-Verbose "Using default text: $defaultText"
+    Write-Verbose "Defining the WPF form and controls"
     $window = [System.Windows.Window]@{
         Title                 = 'Font Family Preview [Ctrl+Q to close]'
         Height                = 325
@@ -43,24 +48,24 @@ $(Get-Date -Format F)
 
     #add a handler to go to next font if the > key is pressed
     $window.Add_KeyDown({
-            if ($_.Key -eq 'Right' -OR $_.Key -eq 'Down') {
-                $comboFont.SelectedIndex++
-            }
-        })
+        if ($_.Key -eq 'Right' -OR $_.Key -eq 'Down') {
+            $comboFont.SelectedIndex++
+        }
+    })
 
     #add a handler to go to previous font if the < key is pressed
     $window.Add_KeyDown({
-            if (($comboFont.SelectedIndex -gt 0) -AND ($_.Key -eq 'Up' -OR $_.Key -eq 'Left' )) {
-                $comboFont.SelectedIndex--
-            }
-        })
+        if (($comboFont.SelectedIndex -gt 0) -AND ($_.Key -eq 'Up' -OR $_.Key -eq 'Left' )) {
+            $comboFont.SelectedIndex--
+        }
+    })
 
     #add a handler to close window with Ctrl+Q
     $window.Add_KeyDown({
-            if ($_.Key -eq 'Q' -AND $_.KeyboardDevice.Modifiers -eq 'Control') {
-                $window.Close()
-            }
-        })
+        if ($_.Key -eq 'Q' -AND $_.KeyboardDevice.Modifiers -eq 'Control') {
+            $window.Close()
+        }
+    })
 
     $Stack = [System.Windows.Controls.StackPanel]@{
         Orientation = 'Vertical'
@@ -112,10 +117,10 @@ $(Get-Date -Format F)
     }
 
     $btnPrevious.Add_Click({
-            if ($comboFont.SelectedIndex -gt 0) {
-                $comboFont.SelectedIndex--
-            }
-        })
+        if ($comboFont.SelectedIndex -gt 0) {
+            $comboFont.SelectedIndex--
+        }
+    })
 
     $grid.AddChild($btnPrevious)
 
@@ -140,7 +145,7 @@ $(Get-Date -Format F)
         HorizontalScrollBarVisibility = 'Auto'
         FontSize                      = 24
         Height                        = $window.Height - 200
-        Width = $window.Width - 50
+        Width                         = $window.Width - 50
         FontFamily                    = $comboFont.SelectedItem
         FontStyle                     = 'Normal'
         Text                          = $DefaultText
@@ -161,12 +166,16 @@ $(Get-Date -Format F)
         ToolTip             = 'Reset to default text and font'
     }
     $btnReset.Add_Click({
-            $txtPreview.Text = $defaultText
-            $comboStyle.SelectedIndex = 0
-            $comboFont.SelectedIndex = 0
-        })
-    $stack.addChild($btnReset)
+        $txtPreview.Text = $defaultText
+        $comboStyle.SelectedIndex = 0
+        $comboFont.SelectedIndex = 0
+    })
+    $stack.AddChild($btnReset)
 
     $window.AddChild($Stack)
+    Write-Verbose "Showing the form"
     [void]$Window.ShowDialog()
+
+    Write-Verbose "Ending $($MyInvocation.MyCommand)"
+
 }

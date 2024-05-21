@@ -26,13 +26,11 @@ This command will provide detailed information about a PSClock.
 ### Example 1
 
 ```powershell
-PS C:\>  PS C:\> get-psclock
+PS C:\> Get-PSClock
 
 Running Format FontFamily Size Weight Color  Style  OnTop RunspaceID
 ------- ------ ---------- ---- ------ -----  -----  ----- ----------
 True      F    Segoi UI     30 Normal yellow Normal False         62
-
-
 ```
 
 Get details about the currently running clock.
@@ -40,11 +38,11 @@ Get details about the currently running clock.
 ### Example 2
 
 ```powershell
-PS C:\> PS C:\> get-psclock | Select *
+PS C:\> Get-PSClock | Select *
 
-Started         : 11/7/2021 4:18:30 PM
+Started         : 11/7/2023 4:18:30 PM
 Format          : F
-Output          : Sunday, November 7, 2021 4:26:18 PM
+Output          : Tuesday, November 7, 2023 4:26:18 PM
 Running         : True
 FontFamily      : Segoi UI
 Size            : 30

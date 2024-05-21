@@ -115,7 +115,7 @@ Accept wildcard characters: False
 
 ### -FontStyle
 
-Specify a font style.
+Specify a font style. Accepted values: Normal, Italic, Oblique
 
 ```yaml
 Type: String
@@ -132,13 +132,13 @@ Accept wildcard characters: False
 
 ### -FontWeight
 
-Specify a font weight.
+Specify a font weight. Accepted values: 'Normal', 'Bold', 'Light', 'Medium', 'SemiBold'
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases: weight
-Accepted values: Normal, Bold, Light
+Accepted values: 'Normal', 'Bold', 'Light', 'Medium', 'SemiBold'
 
 Required: False
 Position: Named

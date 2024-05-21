@@ -26,7 +26,7 @@ The font size must be at least 8. You should have tab completion for the `Color`
 
 By default, the clock will be displayed on the center of your screen. You can click and drag the clock to reposition using the left mouse button. You might have to try a few times to "grab" the clock. You can close the clock with a right click or the `Stop-PSClock` command.
 
-The command lets you specify any `DateTime` format string. This is the same value you would use in a command like `Get-Date -format U`. Note that these strings are case-sensitive. See  https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings for more information.
+The command lets you specify any `DateTime` format string. This is the same value you would use in a command like `Get-Date -format U`. Note that these strings are case-sensitive. See https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings for more information.
 
 ```powershell
 Start-PSClock -size 30 -Color Yellow -format G -FontFamily Verdana
@@ -45,24 +45,6 @@ Save-PSClock
 The file, PSClockSettings.xml, will be stored in `$HOME`. If the file is detected when you run `Start-PSClock`, the saved settings will be imported. If the file exists and you want to specify new settings, use the `-Force` parameter with `Start-PSClock`. This will not remove the saved settings file, only ignore it.
 
 You need to manually delete the file if you no longer wish to use it.
-
-### Runspaces and Limitations
-
-The clock runs in a separate runspace launched from your PowerShell session. If you close the session, the clock will also be closed.
-
-The command is designed to only have one clock running at a time. If you try to start another clock from another PowerShell session, you will get a warning.
-
-```dos
-PS C:\> Start-PSClock
-WARNING:
-A running clock has been detected from another PowerShell session:
-
-[11/6/2021 10:47:33 AM] PSClock started by Jeff under PowerShell process id 13752
-
-If this is incorrect, delete `C:\Users\Jeff\AppData\Local\Temp\psclock-flag.txt` and try again.
-```
-
-If you close PowerShell without properly shutting down the clock you may be left with the flag file. Manually delete the file and try again.
 
 ## [Get-PSClock](docs/Get-PSClock.md)
 
@@ -115,6 +97,18 @@ If you only want to change the color, you can use PSReadLine to display a format
 
 Move the cursor to your selected choice and press <kbd>Enter</kbd>.
 
+### Settings Preview Form
+
+Version 1.4.0 updates the PSClock and allows you to configure the font family, style, and color via a WPF-based GUI. Select the clock and press `p` to display the form. The form elements have tooltips to help you understand what each setting does. Hover your mouse over the element to see the tooltip.
+
+![show settings preview](images/psclock-preview.png)
+
+You can select a combination of font elements and view the preview. If you want to apply the new settings, click the `Apply` button. Don't forget to run `Save-PSClock` to save the settings if you want to re-use them the next time you start a clock.
+
+You can also run `Show-PSClockSettingPreview`.
+
+If you don't want to apply and changes, close the form.
+
 ## [Stop-PSClock](docs/Stop-PSClock.md)
 
 Use this command to stop a running PSClock from the PowerShell prompt.
@@ -132,6 +126,24 @@ Running Format FontFamily           Size Weight Color Style  OnTop RunspaceID
 ------- ------ ----------           ---- ------ ----- -----  ----- ----------
 False     G    Baskerville Old Face   30 Normal white Normal False
 ```
+
+### Runspaces and Limitations
+
+The clock runs in a separate runspace launched from your PowerShell session. If you close the session, the clock will also be closed.
+
+The command is designed to only have one clock running at a time. If you try to start another clock from another PowerShell session, you will get a warning.
+
+```dos
+PS C:\> Start-PSClock
+WARNING:
+A running clock has been detected from another PowerShell session:
+
+[11/6/2021 10:47:33 AM] PSClock started by Jeff under PowerShell process id 13752
+
+If this is incorrect, delete `C:\Users\Jeff\AppData\Local\Temp\psclock-flag.txt` and try again.
+```
+
+If you close PowerShell without properly shutting down the clock you may be left with the flag file. Manually delete the file and try again.
 
 ## Font Preview
 
@@ -151,4 +163,4 @@ For a WPF-based countdown timer, take a look at the [Start-PSCountdownTimer](htt
 
 ## Known Issues
 
-There are no known issues at this time. Please post any bugs or feature requests in the Issues section of this repository.
+There are no known issues at this time. Please post any bugs or feature requests in the [Issues](https://github.com/jdhitsolutions/PSClock/issues) section of this repository.
