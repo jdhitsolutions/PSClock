@@ -1,7 +1,7 @@
 ---
 external help file: PSClock-help.xml
 Module Name: PSClock
-online version: https://bit.ly/3ES92Hh
+online version: https://jdhitsolutions.com/yourls/0d5ea1
 schema: 2.0.0
 ---
 
@@ -225,9 +225,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## NOTES
 
-View the project's README file at https://bit.ly/3H01fJe.
-
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 
@@ -240,4 +238,3 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 [Save-PSClock](Save-PSClock.md)
 
 [Get-Date]()
-

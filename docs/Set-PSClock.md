@@ -1,7 +1,7 @@
 ---
 external help file: PSClock-help.xml
 Module Name: PSClock
-online version: https://bit.ly/3CUOnBS
+online version: https://jdhitsolutions.com/yourls/98a370
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Modify a running PSClock.
 
 ## SYNTAX
 
-```
+```yaml
 Set-PSClock [[-Color] <String>] [[-DateFormat] <String>] [-FontSize <Int32>] [-FontStyle <String>]
  [-FontWeight <String>] [-FontFamily <String>] [-OnTop] [-CurrentPosition <Double[]>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
@@ -37,6 +37,7 @@ PS C:\> Set-PSClock -size 28 -FontStyle Oblique -FontFamily 'Tahoma'
 ```powershell
 PS C:\> Set-PSClock -size 35 -Position 500,100
 ```
+
 Adjust the font size and clock position. This example is using the Position parameter alias.
 
 ## PARAMETERS
@@ -189,6 +190,7 @@ Accept wildcard characters: False
 ```
 
 ### -CurrentPosition
+
 Specify an array of (X,Y) coordinates for the clock position. Use Get-PrimaryDisplaySize to determine the values.
 
 ```yaml
@@ -218,6 +220,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
+
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
@@ -226,11 +229,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### none
+### None
 
 ## NOTES
 
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

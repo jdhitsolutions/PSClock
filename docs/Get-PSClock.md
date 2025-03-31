@@ -1,7 +1,7 @@
 ---
 external help file: PSClock-help.xml
 Module Name: PSClock
-online version: https://bit.ly/3bT9QyZ
+online version: https://jdhitsolutions.com/yourls/747a96
 schema: 2.0.0
 ---
 
@@ -40,9 +40,9 @@ Get details about the currently running clock.
 ```powershell
 PS C:\> Get-PSClock | Select *
 
-Started         : 11/7/2023 4:18:30 PM
+Started         : 11/7/2024 4:18:30 PM
 Format          : F
-Output          : Tuesday, November 7, 2023 4:26:18 PM
+Output          : Thursday, November 7, 2024 4:26:18 PM
 Running         : True
 FontFamily      : Segoi UI
 Size            : 30
@@ -68,11 +68,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### psclock
+### PSClock
 
 ## NOTES
 
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

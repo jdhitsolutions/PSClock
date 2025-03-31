@@ -1,7 +1,7 @@
 ---
 external help file: PSClock-help.xml
 Module Name: PSClock
-online version: https://bit.ly/3o7rlS6
+online version: https://jdhitsolutions.com/yourls/9116fc
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Save current PSClock settings to a file.
 ## SYNTAX
 
 ```yaml
-Save-PSClock [-WhatIf] [-Confirm] [<CommonParameters>]
+Save-PSClock [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -32,6 +32,21 @@ PS C:\> Save-PSClock
 ```
 
 Save current settings to $HOME\PSClockSettings.xml.
+
+### Example 2
+
+```powershell
+PS C:\> Save-PSClock -passthru
+
+        Directory: C:\Users\Jeff
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a---         3/30/2025   2:26 PM           1123 󰗀  PSClockSettings.xml
+```
+
+Save current settings and display the file.
 
 ## PARAMETERS
 
@@ -68,6 +83,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Passthru
+
+Display the file with saved settings.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -82,7 +113,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## NOTES
 
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

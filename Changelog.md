@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+## [1.5.0] - 2025-03-31
+
+### Added
+
+- Added a private, custom function for verbose messages.
+- Moved verbose messages and warnings to localized string data.
+- Modified commands to write additional data for debugging and troubleshooting to the Information stream.
+- Added parameter `-Passthru` to `Save-PSClock`.
+
+### Changed
+
+- Updated `Design.md`.
+- Updated auto completers for the `Color` and `FontFamily` parameters to let the user start typing a parameter value..
+- Help updates.
+- Updated `README`.
+- Changed dependency from `ThreadJob` to the newer `Microsoft.PowerShell.ThreadJob`.
+
+### Removed
+
+- Removed all error handling related to non-Windows systems since this module can't be imported into non-Windows systems.
+
 ## [1.4.0] - 2024-05-21
 
 ### Added
@@ -90,7 +111,8 @@
 
 - Initial module setup.
 
-[Unreleased]: https://github.com/jdhitsolutions/PSClock/compare/v1.4.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSClock/compare/v1.5.0..HEAD
+[1.5.0]: https://github.com/jdhitsolutions/PSClock/compare/v1.4.0..v1.5.0
 [1.4.0]: https://github.com/jdhitsolutions/PSClock/compare/v1.3.0..v1.4.0
 [1.3.0]: https://github.com/jdhitsolutions/PSClock/compare/v1.2.0..v1.3.0
 [1.2.0]: https://github.com/jdhitsolutions/PSClock/compare/v1.1.0..v1.2.0

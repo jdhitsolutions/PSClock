@@ -1,4 +1,3 @@
-
 Function Set-PSClock {
     [CmdletBinding(SupportsShouldProcess)]
     [OutputType("none")]
@@ -66,25 +65,20 @@ Function Set-PSClock {
         [ValidateCount(2,2)]
         [alias("Position")]
         [Double[]]$CurrentPosition,
-
         [Switch]$PassThru
     )
 
-    Write-Verbose "Starting $($MyInvocation.MyCommand)"
-    Write-Verbose "Running under PowerShell $($PSVersionTable.PSVersion)"
-
-    if ($IsLinux -OR $isMacOS) {
-        Write-Warning "This command requires a Windows platform"
-        return
-    }
+    _verbose ($strings.Starting -f $MyInvocation.MyCommand)
+    _verbose ($strings.Running -f $PSVersionTable.PSVersion)
+    _verbose ($strings.Detected -f $Host.Name)
 
     $settings = "FontSize", "FontStyle", "FontWeight", "Color", "OnTop", "DateFormat", "FontFamily","CurrentPosition"
     if ($PSClockSettings -And $PSClockSettings.Running) {
         Foreach ($setting in $settings) {
             if ($PSBoundParameters.ContainsKey($setting)) {
                 $value = $PSBoundParameters[$setting]
-                $action = "Setting value to $value"
-                Write-Verbose "Setting $setting to $value"
+                $action = ($strings.Setting -f $Null,$value)
+                _verbose ($strings.Setting -f $setting,$value)
                 if ($PSCmdlet.ShouldProcess($setting, $action)) {
                     $Global:PSClockSettings[$setting] = $Value
                 }
@@ -97,9 +91,9 @@ Function Set-PSClock {
         }
     } #if running clock found
     else {
-        Write-Warning "Can't find a running clock. Do you need to start one?"
+        Write-Warning $strings.CantFind
     }
 
-    Write-Verbose "Ending $($MyInvocation.MyCommand)"
+    _verbose ($strings.Ending -f $MyInvocation.MyCommand)
 }
 

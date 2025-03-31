@@ -40,7 +40,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
+        <maml:para>Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -79,7 +79,12 @@ BottomRight : 1536,816</dev:code>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://jdhitsolutions.com/yourls/e9e07f</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -112,7 +117,7 @@ BottomRight : 1536,816</dev:code>
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>psclock</maml:name>
+          <maml:name>PSClock</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>
@@ -121,7 +126,7 @@ BottomRight : 1536,816</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
+        <maml:para>Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -140,9 +145,9 @@ True      F    Segoi UI     30 Normal yellow Normal False         62</dev:code>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-PSClock | Select *
 
-Started         : 11/7/2023 4:18:30 PM
+Started         : 11/7/2024 4:18:30 PM
 Format          : F
-Output          : Tuesday, November 7, 2023 4:26:18 PM
+Output          : Thursday, November 7, 2024 4:26:18 PM
 Running         : True
 FontFamily      : Segoi UI
 Size            : 30
@@ -160,7 +165,7 @@ RunspaceID      : 62</dev:code>
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://bit.ly/3bT9QyZ</maml:uri>
+        <maml:uri>https://jdhitsolutions.com/yourls/747a96</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Set-PSClock</maml:linkText>
@@ -218,6 +223,17 @@ RunspaceID      : 62</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Passthru</maml:name>
+          <maml:description>
+            <maml:para>Display the file with saved settings.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -237,6 +253,18 @@ RunspaceID      : 62</dev:code>
         <maml:name>WhatIf</maml:name>
         <maml:description>
           <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Passthru</maml:name>
+        <maml:description>
+          <maml:para>Display the file with saved settings.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -268,7 +296,7 @@ RunspaceID      : 62</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
+        <maml:para>Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -279,11 +307,25 @@ RunspaceID      : 62</dev:code>
           <maml:para>Save current settings to $HOME\PSClockSettings.xml.</maml:para>
         </dev:remarks>
       </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Save-PSClock -passthru
+
+        Directory: C:\Users\Jeff
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a---         3/30/2025   2:26 PM           1123 󰗀  PSClockSettings.xml</dev:code>
+        <dev:remarks>
+          <maml:para>Save current settings and display the file.</maml:para>
+        </dev:remarks>
+      </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://bit.ly/3o7rlS6</maml:uri>
+        <maml:uri>https://jdhitsolutions.com/yourls/9116fc</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Start-PSClock</maml:linkText>
@@ -600,7 +642,7 @@ RunspaceID      : 62</dev:code>
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>none</maml:name>
+          <maml:name>None</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>
@@ -609,7 +651,7 @@ RunspaceID      : 62</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
+        <maml:para>Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -631,7 +673,7 @@ RunspaceID      : 62</dev:code>
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://bit.ly/3CUOnBS</maml:uri>
+        <maml:uri>https://jdhitsolutions.com/yourls/98a370</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Show-PSClockSettingPreview</maml:linkText>
@@ -720,7 +762,7 @@ RunspaceID      : 62</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
+        <maml:para>Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -740,6 +782,10 @@ RunspaceID      : 62</dev:code>
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://jdhitsolutions.com/yourls/b68fcd</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Set-PSClock</maml:linkText>
         <maml:uri></maml:uri>
@@ -792,7 +838,7 @@ RunspaceID      : 62</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
+        <maml:para>Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -805,6 +851,10 @@ RunspaceID      : 62</dev:code>
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://jdhitsolutions.com/yourls/9a6ebc</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Set-PSClock</maml:linkText>
         <maml:uri></maml:uri>
@@ -1113,8 +1163,7 @@ RunspaceID      : 62</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>View the project's README file at https://bit.ly/3H01fJe.</maml:para>
-        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
+        <maml:para>Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1136,7 +1185,7 @@ RunspaceID      : 62</dev:code>
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://bit.ly/3ES92Hh</maml:uri>
+        <maml:uri>https://jdhitsolutions.com/yourls/0d5ea1</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Set-PSClock</maml:linkText>
@@ -1239,7 +1288,7 @@ RunspaceID      : 62</dev:code>
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>none</maml:name>
+          <maml:name>None</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>
@@ -1248,7 +1297,7 @@ RunspaceID      : 62</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
+        <maml:para>Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1263,7 +1312,7 @@ RunspaceID      : 62</dev:code>
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://bit.ly/3C7ad3X</maml:uri>
+        <maml:uri>https://jdhitsolutions.com/yourls/7ed4f9</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Set-PSClock</maml:linkText>

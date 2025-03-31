@@ -179,18 +179,19 @@ PS C:\> $PSClockSettings
 
 Name                           Value
 ----                           -----
-FontStyle                      Normal
-Started                        11/9/2021 8:22:57 AM
-Running                        True
-FontWeight                     Normal
-CurrentPosition                {1660, 1081}
-Color                          yellow
-FontSize                       30
-StartingPosition               {1660, 1081}
-FontFamily                     gadugi
-Runspace                       System.Management.Automation.Runspaces.LocalRunspace
-OnTop                          False
+FontSize                       65
+CommandPath                    C:\scripts\psclock\functions
 DateFormat                     F
+Color                          Yellow
+FontStyle                      Normal
+Started                        3/31/2025 10:34:48 AM
+OnTop                          False
+Running                        True
+StartingPosition               {61, 62}
+Runspace                       System.Management.Automation.Runspaces.LocalRunspace
+FontWeight                     Normal
+FontFamily                     Freestyle Script
+CurrentPosition                {61, 62}
 ```
 
 ### Set-PSClock
@@ -217,11 +218,11 @@ Because I didn't want to have to manually update the hashtable if I wanted to mo
 When a new PSClock is created, it also creates a new runspace. You can see this by running `Get-Runspace`. Runspace information is stored in the `$PSClockSettings` synchronized hashtable.
 
 ```dos
-PS C:\>  Get-PSClock
+PS C:\> Get-PSClock
 
-Running Format FontFamily Size Weight Color  Style  OnTop RunspaceID
-------- ------ ---------- ---- ------ -----  -----  ----- ----------
-True      F    gadugi       30 Normal yellow Normal False         11
+Running Format FontFamily       Size Weight Color  Style  OnTop RunspaceID
+------- ------ ----------       ---- ------ -----  -----  ----- ----------
+True      F    Freestyle Script   65 Normal Yellow Normal False         11
 
 PS C:\> Get-Runspace -id 11
 
@@ -255,27 +256,32 @@ I tend to run multiple PowerShell windows and versions at the same time. While I
 
 ### Flag File
 
-When a new clock is created, `Start-PSClock` creates a _flag_ file in the user's TEMP folder. This is nothing more than a text file.
+When a new clock is created, `Start-PSClock` creates a _flag_ file in the user's TEMP folder. This is nothing more than a text file. The flag file variable is defined in the module file.
 
 ```powershell
-"[{0}] PSClock started by {1} under PowerShell process id $pid" -f (Get-Date), $env:USERNAME |  Out-File $env:temp\psclock-flag.txt
+$FlagPath = Join-Path -Path $env:temp -ChildPath psclock-flag.txt
+```
+
+The file is created in the `Start-PSClock` function. The file contains a timestamp and the user who started the clock.
+
+```powershell
+"[{0}] PSClock started by {1} under PowerShell process id $pid" -f (Get-Date), $env:USERNAME |  Out-File $FlagPath
 ```
 
 The `Start-PSClock` command checks for this file, and if it is found, writes a warning message and then quits.
 
 ```powershell
-if (Test-Path $env:temp\psclock-flag.txt) {
-    $msg = @"
+if (Test-Path $FlagPath) {
+    Write-Warning ($strings.FlagFound -f (Get-Content -path $FlagPath),$FlagPath)
 
-A running clock has been detected from another PowerShell session:
-
-$(Get-Content $env:temp\psclock-flag.txt)
-
-If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
-
-"@
-    Write-Warning $msg
-    Return
+    $r = Read-Host $strings.RemovePrompt
+    if ($r -eq 'Y') {
+        Remove-Item $FlagPath
+    }
+    else {
+        #bail out
+        Return
+    }
 }
 ```
 
@@ -284,10 +290,9 @@ In a different PowerShell session you'll get a result like this:
 ```dos
 PS C:\> Start-PSClock
 
-WARNING:
-A running clock has been detected from another PowerShell session:
+WARNING: A running clock has been detected from another PowerShell session on this desktop:
 
-[11/9/2021 8:22:57 AM] PSClock started by Jeff under PowerShell process id 33316
+[3/31/2025 12:17:52 PM] PSClock started by Jeff under PowerShell process id 54672
 
 If this is incorrect, delete C:\Users\Jeff\AppData\Local\Temp\psclock-flag.txt and try again.
 ```
@@ -295,8 +300,8 @@ If this is incorrect, delete C:\Users\Jeff\AppData\Local\Temp\psclock-flag.txt a
 The `_Quit` private function in `Start-PSClock` should delete this file.
 
 ```powershell
-if (Test-Path $env:temp\psclock-flag.txt) {
-    Remove-Item $env:temp\psclock-flag.txt
+if (Test-Path $FlagPath) {
+    Remove-Item $FlagPath
 }
 ```
 
@@ -379,7 +384,7 @@ The only true object that this module generates is from `Get-PSClock`. This func
 The `PSTypeName` entry defines an object type.
 
 ```dos
-PS C:\S> Get-PSClock | Get-Member
+PS C:\> Get-PSClock | Get-Member
 
    TypeName: PSClock
 
@@ -389,23 +394,23 @@ Equals          Method       bool Equals(System.Object obj)
 GetHashCode     Method       int GetHashCode()
 GetType         Method       type GetType()
 ToString        Method       string ToString()
-Color           NoteProperty string Color=yellow
+Color           NoteProperty string Color=Yellow
 CurrentPosition NoteProperty Object[] CurrentPosition=System.Object[]
-FontFamily      NoteProperty string FontFamily=gadugi
+FontFamily      NoteProperty string FontFamily=Freestyle Script
 Format          NoteProperty string Format=F
 OnTop           NoteProperty switch OnTop=False
-Output          NoteProperty System.String Output=Tuesday, November 9, 2021 9:2…
+Output          NoteProperty System.String Output=Monday, March 31, 2025 10:42:19 AM
 Running         NoteProperty bool Running=True
-RunspaceID      NoteProperty int RunspaceID=11
-Size            NoteProperty int Size=30
-Started         NoteProperty System.DateTime Started=11/9/2021 8:22:57 AM
+RunspaceID      NoteProperty int RunspaceID=46
+Size            NoteProperty int Size=65
+Started         NoteProperty System.DateTime Started=3/31/2025 10:34:48 AM
 Style           NoteProperty string Style=Normal
 Weight          NoteProperty string Weight=Normal
 ```
 
 The object is defined with all the properties I might ever want to use. However, I only need to see a subset in most cases. This is no different than a command like `Get-Process`. The process object is very rich, but the command output provide a formatted view. I can do the same thing, but only if the object has a defined name, like `PSClock`.
 
-I used the [New-PSFormatXML](http://bit.ly/31SGo5o) command from the [PSScriptTools](https://github.com/jdhitsolutions/PSScriptTools) module. This generated a format ps1xml file which is exported in the module manifest.
+I used the [New-PSFormatXML](https://jdhitsolutions.com/yourls/c8dc45) command from the [PSScriptTools](https://github.com/jdhitsolutions/PSScriptTools) module. This generated a format ps1xml file which is exported in the module manifest.
 
 ```powershell
  FormatsToProcess     = @('formats\psclock.format.ps1xml')
@@ -437,7 +442,7 @@ Register-ArgumentCompleter -CommandName 'Start-PSClock', 'Set-PSClock' -Paramete
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
 
     [System.Drawing.Text.InstalledFontCollection]::new().Families.Name |
-    Where-Object { $_ -match "^$($WordToComplete)" } |
+    Where-Object { $_ -like "$($WordToComplete)*" } |
     ForEach-Object {
         # completion text,listitem text,result type,Tooltip
         [System.Management.Automation.CompletionResult]::new("'$($_)'", $_, 'ParameterValue', $_)
@@ -448,7 +453,7 @@ Register-ArgumentCompleter -CommandName 'Start-PSClock', 'Set-PSClock' -Paramete
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
 
     [System.Drawing.Brushes].GetProperties().name | Select-Object -Skip 1 |
-    Where-Object { $_ -match "^$($WordToComplete)" } |
+    Where-Object { $_ -Like "$($WordToComplete)*" } |
     ForEach-Object {
         # completion text,listitem text,result type,Tooltip
         [System.Management.Automation.CompletionResult]::new("'$($_)'", $_, 'ParameterValue', $_)
@@ -474,6 +479,55 @@ Some of the parameters in `Start-PSClock` have parameter validation using `Valid
 ```
 
 This too, provides an auto-completion experience.
+
+## Custom Verbose
+
+Localized string data and custom verbose messaging was introduced in module version 1.5.0. This centralizes the string data and makes it easier to localize. The strings are stored in a hashtable in `en-us\PSClock.psd1`.
+
+```powershell
+ConvertFrom-StringData @"
+    SynchHash = Building a synchronized hashtable
+    CantFind = Cant find a running PSClock. Do you need to start one?
+    CreatingFlag = Creating the flag file {0}
+    DefiningRunspace = Defining the runspace command
+    DefiningWPF = Defining the WPF form and controls
+    Detected = Detected PowerShell host: {0}
+    ...
+"@
+
+This data is loaded on module import.
+
+```powershell
+if ((Get-Culture).Name -match '\w+') {
+    Import-LocalizedData -BindingVariable strings
+}
+else {
+    #force using En-US if no culture found, which might happen on non-Windows systems.
+    Import-LocalizedData -BindingVariable strings -FileName PSClock.psd1 -BaseDirectory $PSScriptRoot\en-us
+}
+```
+
+The functions use this string data for verbose messages and warning.
+
+```powershell
+_verbose ($strings.Starting -f $MyInvocation.MyCommand)
+_verbose ($strings.Running -f $PSVersionTable.PSVersion)
+_verbose ($strings.Detected -f $Host.Name)
+```
+
+The module uses a custom and private function called `_verbose` to display the verbose messages.
+
+```powershell
+function _verbose {
+    [CmdletBinding()]
+    Param([string]$Message)
+
+    $m = "[$([char]27)[3m{0}$([char]27)[0m] {1}" -f (Get-Date).TimeOfDay, $Message
+    Microsoft.PowerShell.Utility\Write-Verbose $m
+}
+```
+
+![custom verbose messages](images/custom-verbose.png)
 
 ## Learn More
 

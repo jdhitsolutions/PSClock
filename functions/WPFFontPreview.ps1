@@ -1,21 +1,3 @@
-if ($IsWindows -OR $PSEdition -eq 'desktop') {
-    Try {
-        Add-Type -AssemblyName PresentationFramework -ErrorAction Stop
-        Add-Type -AssemblyName PresentationCore -ErrorAction Stop
-        Add-Type -AssemblyName System.Drawing -ErrorAction Stop
-    }
-    Catch {
-        #Failsafe error handling
-        Throw $_
-        Return
-    }
-}
-else {
-    Write-Warning 'This requires Windows PowerShell or PowerShell Core on Windows.'
-    #Bail out
-    Return
-}
-
 Function Show-FontPreview {
     [CmdletBinding()]
     Param(
@@ -23,9 +5,11 @@ Function Show-FontPreview {
         [string]$SampleText = $(Get-Date -Format F)
     )
 
-    Write-Verbose "Starting $($MyInvocation.MyCommand)"
-    Write-Verbose "Running under PowerShell $($PSVersionTable.PSVersion)"
-    Write-Verbose "Loading font families"
+    _verbose ($strings.Starting -f $MyInvocation.MyCommand)
+    _verbose ($strings.Running -f $PSVersionTable.PSVersion)
+    _verbose ($strings.Detected -f $Host.Name)
+
+    _verbose $strings.LoadingFont
     $Families = [System.Drawing.text.installedFontCollection]::new().Families
 
     $defaultText = @"
@@ -33,8 +17,8 @@ Function Show-FontPreview {
 $sampleText
 
 "@
-    Write-Verbose "Using default text: $defaultText"
-    Write-Verbose "Defining the WPF form and controls"
+    _verbose ($strings.UsingText -f $SampleText)
+    _verbose $strings.definingWPF
     $window = [System.Windows.Window]@{
         Title                 = 'Font Family Preview [Ctrl+Q to close]'
         Height                = 325
@@ -173,9 +157,9 @@ $sampleText
     $stack.AddChild($btnReset)
 
     $window.AddChild($Stack)
-    Write-Verbose "Showing the form"
+    _verbose $strings.Showing
     [void]$Window.ShowDialog()
 
-    Write-Verbose "Ending $($MyInvocation.MyCommand)"
+    _verbose ($strings.Ending -f $MyInvocation.MyCommand)
 
 }

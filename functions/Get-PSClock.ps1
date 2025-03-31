@@ -1,27 +1,24 @@
 Function Get-PSClock {
     [CmdletBinding()]
-    [OutputType("PSClock")]
-    [Alias("gpc")]
+    [OutputType('PSClock')]
+    [Alias('gpc')]
     Param()
 
-    Write-Verbose "Starting $($MyInvocation.MyCommand)"
-    Write-Verbose "Running under PowerShell $($PSVersionTable.PSVersion)"
-
-    #verify the OS. This should never be needed. Added as a failsafe.
-    if ($IsLinux -OR $isMacOS) {
-        Write-Warning "This command requires a Windows platform"
-        return
+    _verbose ($strings.Starting -f $MyInvocation.MyCommand)
+    if ($MyInvocation.CommandOrigin -eq 'Runspace') {
+        _verbose ($strings.Running -f $PSVersionTable.PSVersion)
+        _verbose ($strings.Detected -f $Host.Name)
     }
 
     #test if there is a settings hashtable
     if ($global:PSClockSettings) {
         #remove runspace setting if not running
         if ( -not ($global:PSClockSettings.running)) {
-            $global:PSClockSettings.remove("Runspace")
+            $global:PSClockSettings.remove('Runspace')
         }
 
         [PSCustomObject]@{
-            PSTypeName      = "PSClock"
+            PSTypeName      = 'PSClock'
             Started         = $global:PSClockSettings.Started
             Format          = $global:PSClockSettings.DateFormat
             Output          = (Get-Date -Format $global:PSClockSettings.DateFormat)
@@ -37,8 +34,8 @@ Function Get-PSClock {
         }
     }
     Else {
-        Write-Warning "Can't find a PSClock. Do you need to start one?"
+        Write-Warning $strings.CantFind
     }
 
-    Write-Verbose "Ending $($MyInvocation.MyCommand)"
+    _verbose ($strings.Ending -f $MyInvocation.MyCommand)
 }

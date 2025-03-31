@@ -4,17 +4,32 @@
 
 ![logo](images/psclock.png)
 
-This module will create a WPF-based clock launched from a PowerShell prompt that runs on your Windows desktop. The clock runs in a background PowerShell runspace so that it doesn't block. You can customize the clock's appearance including how you want to format the date and time. The clock background is transparent so all you see is formatted text.
+This module will create a WPF-based clock, launched from a PowerShell prompt that on your Windows desktop. The clock runs in a background PowerShell runspace so that it doesn't block. The module will automatically clean up the runspace when you close the clock. You can customize the clock's appearance including how you want to format the date and time. The clock's background is transparent so all you see is formatted text.
 
-If you are running Windows, you can install the module from the PowerShell Gallery. It will work in both Windows PowerShell and PowerShell 7.
+## Installation
+
+If you are running Windows, you can install the module from the PowerShell Gallery. This module will work in Windows PowerShell and PowerShell 7 on Windows.
 
 ```powershell
-Install-Module PSClock [-scope CurrentUser]
+Install-PSResource PSClock [-scope AllUsers]
 ```
 
-Installing the module will also install the `ThreadJob` module if it isn't already installed.
+Installing the module will also install the `Microsoft.PowerShell.ThreadJob` module if it isn't already installed. If you attempt to install the module with `Install-Module` and you have the legacy `ThreadJob` module installed, you might get a warning message. If this happens, run `Install-Module PSClock -AllowClobber`. This error doesn't seem to happen when using `Install-PSResource`.
 
-## [Start-PSClock](docs/Start-PSClock.md)
+## Module Commands
+
+| Name                          | Alias       | Synopsis                                      |
+|-------------------------------|-------------|----------------------------------------------|
+| [Get-PrimaryDisplaySize](docs/Get-PrimaryDisplaySize.md) |             | Get the primary display size in pixels.      |
+| [Get-PSClock](docs/Get-PSClock.md)           | *gpc*       | Get PSClock details.                         |
+| [Save-PSClock](docs/Save-PSClock.md)         |             | Save current PSClock settings to a file.     |
+| [Set-PSClock](docs/Set-PSClock.md)           | *spc*       | Modify a running PSClock.                    |
+| [Show-FontPreview](docs/Show-FontPreview.md) |             | Show a font preview in a WPF form.           |
+| [Show-PSClockSettingPreview](docs/Show-PSClockSettingPreview.md) |             | Show a GUI preview of PSClock settings.      |
+| [Start-PSClock](docs/Start-PSClock.md)       | *psclock*   | Start a PSClock.                             |
+| [Stop-PSClock](docs/Stop-PSClock.md)         |             | Stop a running PSClock.                      |
+
+### [Start-PSClock](docs/Start-PSClock.md)
 
 Use `Start-PSClock` or the `psclock` alias to launch a PSClock.
 
@@ -42,30 +57,28 @@ You can use `Save-PSClock` to export current clock settings to an XML file.
 Save-PSClock
 ```
 
-The file, PSClockSettings.xml, will be stored in `$HOME`. If the file is detected when you run `Start-PSClock`, the saved settings will be imported. If the file exists and you want to specify new settings, use the `-Force` parameter with `Start-PSClock`. This will not remove the saved settings file, only ignore it.
+The file, `PSClockSettings.xml`, will be stored in `$HOME`. If the file is detected when you run `Start-PSClock`, the saved settings will be imported. If the file exists and you want to specify new settings, use the `-Force` parameter with `Start-PSClock`. This will not remove the saved settings file, only ignore it.
 
-You need to manually delete the file if you no longer wish to use it.
+You need to manually delete the file if you no longer wish to use it. If you uninstall the module you will also need to manually delete the file.
 
-## [Get-PSClock](docs/Get-PSClock.md)
+### [Get-PSClock](docs/Get-PSClock.md)
 
 Use this command to get information about the current clock.
 
-```dos
+```cmd
 PS C:\> Get-PSClock
 
 Running Format FontFamily Size Weight Color  Style  OnTop RunspaceID
 ------- ------ ---------- ---- ------ -----  -----  ----- ----------
-True      G    Verdana      30 Normal Yellow Normal False         28
+True      G    Verdana      30 Normal Yellow Normal False         24
 ```
 
 If the clock is not running, the `Running` value will be displayed in Red and there will be no `RunspaceID`. There are other properties to this object you might want to use.
 
-```dos
-PS C:\> Get-PSClock | Select *
-
-Started         : 11/6/2021 10:47:33 AM
+```cmd
+Started         : 3/30/2025 10:57:30 AM
 Format          : G
-Output          : 11/6/2021 10:59:08 AM
+Output          : 3/30/2025 10:59:49 AM
 Running         : True
 FontFamily      : Verdana
 Size            : 30
@@ -73,18 +86,18 @@ Weight          : Normal
 Color           : Yellow
 Style           : Normal
 OnTop           : False
-CurrentPosition : {1635, 1089}
-RunspaceID      : 28
+CurrentPosition : {1729, 552}
+RunspaceID      : 24
 ```
 
 The `Output` property is a sample using the specified format string.
 
-## [Set-PSClock](docs/Set-PSClock.md)
+### [Set-PSClock](docs/Set-PSClock.md)
 
 Use this command to modify the settings of a running PSClock.
 
 ```powershell
-Set-PSClock -size 30 -color white -FontFamily 'Baskerville Old Face'
+Set-PSClock -size 30 -color white -FontFamily 'Baskerville Old Face' -force
 ```
 
 ![modify the clock](images/sample-3.png)
@@ -99,7 +112,7 @@ Move the cursor to your selected choice and press <kbd>Enter</kbd>.
 
 ### Settings Preview Form
 
-Version 1.4.0 updates the PSClock and allows you to configure the font family, style, and color via a WPF-based GUI. Select the clock and press `p` to display the form. The form elements have tooltips to help you understand what each setting does. Hover your mouse over the element to see the tooltip.
+Version 1.4.0 updates the PSClock and allows you to configure the font family, style, and color via a WPF-based GUI. Select the clock and press `p` to display the form. The form elements have tooltips that explain each setting. Hover your mouse over the element to see the tooltip.
 
 ![show settings preview](images/psclock-preview.png)
 
@@ -109,7 +122,7 @@ You can also run `Show-PSClockSettingPreview`.
 
 If you don't want to apply and changes, close the form.
 
-## [Stop-PSClock](docs/Stop-PSClock.md)
+### [Stop-PSClock](docs/Stop-PSClock.md)
 
 Use this command to stop a running PSClock from the PowerShell prompt.
 
@@ -119,7 +132,7 @@ Stop-PSClock
 
 You can also right-click the clock to dismiss it, or close and remove the runspace it is using. You can still use `Get-PSClock` which should now reflect that a clock is not running.
 
-```dos
+```cmd
 PS C:\> Get-PSClock
 
 Running Format FontFamily           Size Weight Color Style  OnTop RunspaceID
@@ -127,23 +140,43 @@ Running Format FontFamily           Size Weight Color Style  OnTop RunspaceID
 False     G    Baskerville Old Face   30 Normal white Normal False
 ```
 
-### Runspaces and Limitations
+## Profile Integration
+
+Ideally, you will start and stop the PSClock from the PowerShell prompt. This ensures that the flag file is removed. When you terminate a PowerShell session with a running clock, the flag file will not be removed. One way to ensure that the clock is stopped is to add the following code to your PowerShell profile. This will remove the flag file when you end the PowerShell session.
+
+```powershell
+Register-EngineEvent -SourceIdentifier PowerShell.Exiting -Action {
+    If ($PSClockSettings.Running) {
+        $flag = "$ENV:temp\psclock-flag.txt"
+        If (Test-Path $flag) {
+            Remove-Item $flag -Force
+        }
+        Stop-PSClock
+    }
+} | Out-Null
+```
+
+However, this will only run if you type `exit` to terminate the session. If you simply close the window, the `PowerShell.Exiting` event will not be triggered. You can also add the code to your profile to automatically start the clock when you open a new PowerShell session. In Windows Terminal, you still might need to manually close the profile tab once you see that the clock has ended.
+
+## Runspaces and Limitations
 
 The clock runs in a separate runspace launched from your PowerShell session. If you close the session, the clock will also be closed.
 
 The command is designed to only have one clock running at a time. If you try to start another clock from another PowerShell session, you will get a warning.
 
-```dos
+```cmd
 PS C:\> Start-PSClock
 WARNING:
 A running clock has been detected from another PowerShell session:
 
-[11/6/2021 10:47:33 AM] PSClock started by Jeff under PowerShell process id 13752
+[3/30/2025 11:00:36 AM] PSClock started by Jeff under PowerShell process id 46900
 
-If this is incorrect, delete `C:\Users\Jeff\AppData\Local\Temp\psclock-flag.txt` and try again.
+If this is incorrect, delete C:\Users\Jeff\AppData\Local\Temp\psclock-flag.txt and try again.
+
+Do you want to remove the flag file? Y/N:
 ```
 
-If you close PowerShell without properly shutting down the clock you may be left with the flag file. Manually delete the file and try again.
+If you close PowerShell without properly shutting down the clock you may be left with the flag file. Delete the file and try again.
 
 ## Font Preview
 

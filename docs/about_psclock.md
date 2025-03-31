@@ -41,9 +41,9 @@ If the clock is not running, the `Running` value will be displayed in Red and th
 ```dos
 PS C:\> Get-PSClock | Select *
 
-Started         : 11/6/2023 10:47:33 AM
+Started         : 11/6/2024 10:47:33 AM
 Format          : G
-Output          : 11/6/2023 10:59:08 AM
+Output          : 11/6/2024 10:59:08 AM
 Running         : True
 FontFamily      : Verdana
 Size            : 30
@@ -119,7 +119,7 @@ PS C:\> Start-PSClock
 WARNING:
 A running clock has been detected from another PowerShell session:
 
-[11/6/2023 10:47:33 AM] PSClock started by Jeff under PowerShell process id 13752
+[11/6/2024 10:47:33 AM] PSClock started by Jeff under PowerShell process id 13752
 
 If this is incorrect, delete `C:\Users\Jeff\AppData\Local\Temp\psclock-flag.txt` and try again.
 ```
@@ -128,7 +128,7 @@ If you close PowerShell without properly shutting down the clock you may be left
 
 # NOTE
 
-For a WPF-based countdown timer, take a look at the [Start-PSCountdownTimer](https://bit.ly/3T5ntz1) command in the [PSTimers](https://github.com/jdhitsolutions/PSTimers) module.
+For a WPF-based countdown timer, take a look at the `Start-PSCountdownTimer` command in the [PSTimers](https://github.com/jdhitsolutions/PSTimers) module.
 
 # TROUBLESHOOTING NOTE
 

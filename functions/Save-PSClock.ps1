@@ -1,14 +1,12 @@
 Function Save-PSClock {
     [CmdletBinding(SupportsShouldProcess)]
-    Param()
-
-    Write-Verbose "Starting $($MyInvocation.MyCommand)"
-    Write-Verbose "Running under PowerShell $($PSVersionTable.PSVersion)"
-
-    if ($IsLinux -OR $isMacOS) {
-        Write-Warning "This command requires a Windows platform"
-        return
-    }
+    Param(
+        [Parameter(HelpMessage = "Display the file with saved settings.")]
+        [switch]$Passthru
+    )
+    _verbose ($strings.Starting -f $MyInvocation.MyCommand)
+    _verbose ($strings.Running -f $PSVersionTable.PSVersion)
+    _verbose ($strings.Detected -f $Host.Name)
 
     #define a list of properties to export
     $props = @{Name="DateFormat";Expression={$_.Format}},"Color",
@@ -18,12 +16,15 @@ Function Save-PSClock {
     @{Name="Position";Expression = {$_.CurrentPosition}}
 
     if ($global:PSClockSettings) {
-        Write-Verbose "Saving PSClock settings to $SavePath"
+        _verbose ($strings.Saving -f $SavePath)
         Get-PSClock | Select-Object -property $props | Export-Clixml -Path $SavePath
+        If ($Passthru -AND (-Not $WhatIfPreference)) {
+            Get-Item -Path $SavePath
+        }
     }
     else {
-        Write-Warning "Can't find a PSClock. Do you need to start one?"
+        Write-Warning $strings.CantFind
     }
 
-    Write-Verbose "Ending $($MyInvocation.MyCommand)"
+    _verbose ($strings.Ending -f $MyInvocation.MyCommand)
 }

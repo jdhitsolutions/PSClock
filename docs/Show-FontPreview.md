@@ -1,7 +1,7 @@
 ---
 external help file: PSClock-help.xml
 Module Name: PSClock
-online version:
+online version: https://jdhitsolutions.com/yourls/b68fcd
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Show a font preview in a WPF form.
 
 ## SYNTAX
 
-```
+```yaml
 Show-FontPreview [-SampleText <String>] [<CommonParameters>]
 ```
 
@@ -43,6 +43,7 @@ Launch the preview form with the current date displayed. You can always modify t
 ## PARAMETERS
 
 ### -SampleText
+
 The default text to display.
 
 ```yaml
@@ -71,7 +72,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## NOTES
 
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

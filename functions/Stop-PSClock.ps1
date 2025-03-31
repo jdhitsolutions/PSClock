@@ -3,13 +3,9 @@ Function Stop-PSClock {
     [OutputType("none")]
     Param()
 
-    Write-Verbose "Starting ($MyInvocation.MyCommand)"
-    Write-Verbose "Running under PowerShell $($PSVersionTable.PSVersion)"
-
-    if ($IsLinux -OR $isMacOS) {
-        Write-Warning "This command requires a Windows platform"
-        return
-    }
+    _verbose ($strings.Starting -f $MyInvocation.MyCommand)
+    _verbose ($strings.Running -f $PSVersionTable.PSVersion)
+    _verbose ($strings.Detected -f $Host.Name)
 
     if ($PSClockSettings -And $PSClockSettings.Running) {
         if ($PSCmdlet.ShouldProcess("PSClock [runspace id $($PSClockSettings.runspace.id)]")) {
@@ -17,6 +13,7 @@ Function Stop-PSClock {
         }
     }
     else {
-        Write-Warning "Can't find a running clock."
+        Write-Warning $strings.CantFind
     }
+    _verbose ($strings.Ending -f $MyInvocation.MyCommand)
 }

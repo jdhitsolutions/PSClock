@@ -68,35 +68,25 @@ Function Start-PSClock {
     )
 
     Begin {
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Starting $($MyInvocation.MyCommand)"
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Running under PowerShell $($PSVersionTable.PSVersion)"
+        _verbose ($strings.Starting -f $MyInvocation.MyCommand)
+        _verbose ($strings.Running -f $PSVersionTable.PSVersion)
+        _verbose ($strings.Detected -f $Host.Name)
     } #begin
     Process {
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Validating"
-        if ($IsLinux -OR $isMacOS) {
-            Write-Warning 'This command requires a Windows platform.'
-            return
-        }
+        _verbose $strings.Validating
 
         if ($PSClockSettings.Running) {
-            Write-Warning 'You already have a clock running. You can only have one clock running at a time.'
+            Write-Warning $strings.RunningClock
             Return
         }
 
-        if (Test-Path $env:temp\psclock-flag.txt) {
-            $msg = @"
+        #FlagPath is a module-scoped variable set in the psm1 file
+        if (Test-Path $FlagPath) {
+            Write-Warning ($strings.FlagFound -f (Get-Content -path $FlagPath),$FlagPath)
 
-A running clock has been detected from another PowerShell session:
-
-$(Get-Content $env:temp\psclock-flag.txt)
-
-If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
-
-"@
-            Write-Warning $msg
-            $r = Read-Host 'Do you want to remove the flag file? Y/N'
+            $r = Read-Host $strings.RemovePrompt
             if ($r -eq 'Y') {
-                Remove-Item $env:temp\psclock-flag.txt
+                Remove-Item $FlagPath
             }
             else {
                 #bail out
@@ -109,7 +99,7 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
             [void](Get-Date -Format $DateFormat -ErrorAction Stop)
         }
         Catch {
-            Write-Warning "The DateFormat value $DateFormat is not a valid format string. Try something like F,G, or U which are case-sensitive."
+            Write-Warning ($strings.WarnDateFormat -f $DateFormat)
             Return
         }
 
@@ -117,15 +107,15 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
         # $SavePath is a module-scoped variable set in the psm1 file
         # $SavePath = Join-Path -Path $home -ChildPath PSClockSettings.xml
         if ((Test-Path $SavePath) -AND (-not $Force)) {
-            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Using saved settings"
+            _verbose $strings.UsingSaved
             $import = Import-Clixml -Path $SavePath
             foreach ($prop in $import.PSObject.properties) {
-                Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Using imported value for $($prop.name)"
+                _verbose ($strings.UsingImported -f $prop.name)
                 Set-Variable -Name $prop.name -Value $prop.Value
             }
         }
 
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Building a synchronized hashtable"
+        _verbose $strings.SynchHash
         $global:PSClockSettings = [hashtable]::Synchronized(@{
                 DateFormat       = $DateFormat
                 FontSize         = $FontSize
@@ -138,7 +128,7 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 CurrentPosition  = $Null
                 CommandPath      = $PSScriptRoot
             })
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($global:PSClockSettings | Out-String)"
+        Write-Debug $global:PSClockSettings
         #Run the clock in a runspace
         $rs = [RunspaceFactory]::CreateRunspace()
         $rs.ApartmentState = 'STA'
@@ -147,9 +137,11 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
 
         $global:PSClockSettings.add('Runspace', $rs)
 
+        #pass variable values to the runspace
         $rs.SessionStateProxy.SetVariable('PSClockSettings', $global:PSClockSettings)
+        $rs.SessionStateProxy.SetVariable('FlagPath', $script:FlagPath)
 
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Defining the runspace command"
+        _verbose $strings.DefiningRunspace
         $PSCmd = [PowerShell]::Create().AddScript({
             Add-Type -AssemblyName PresentationFramework -ErrorAction Stop
             Add-Type -AssemblyName PresentationCore -ErrorAction Stop
@@ -174,8 +166,8 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
                 Start-ThreadJob -ScriptBlock $cmd -ArgumentList $PSClockSettings.runspace.id
 
                 #delete the flag file
-                if (Test-Path $env:temp\psclock-flag.txt) {
-                    Remove-Item $env:temp\psclock-flag.txt
+                if (Test-Path $FlagPath) {
+                    Remove-Item $FlagPath
                 }
             }
 
@@ -247,8 +239,8 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
 
             #fail safe to remove flag file
             $form.Add_Unloaded({
-                if (Test-Path $env:temp\psclock-flag.txt) {
-                    Remove-Item $env:temp\psclock-flag.txt
+                if (Test-Path $FlagPath) {
+                    Remove-Item $FlagPath
                 }
             })
 
@@ -300,12 +292,13 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
         })
 
         $PSCmd.runspace = $rs
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Launching the runspace"
+        _verbose $strings.Launching
         [void]$PSCmd.BeginInvoke()
+        Write-Information -MessageData $PSCmd -Tags raw
 
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Creating the flag file $env:temp\psclock-flag.txt"
+        _verbose ($strings.CreatingFlag -f "$FlagPath")
         "[{0}] PSClock started by {1} under PowerShell process id $pid" -f (Get-Date), $env:USERNAME |
-        Out-File -FilePath $env:temp\psclock-flag.txt
+        Out-File -FilePath $FlagPath
 
         if ($PassThru) {
             Start-Sleep -Seconds 1
@@ -313,7 +306,7 @@ If this is incorrect, delete $env:temp\psclock-flag.txt and try again.
         }
     } #process
     End {
-        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Ending $($MyInvocation.MyCommand)"
+        _verbose ($strings.Ending -f $MyInvocation.MyCommand)
     } #end
 
 } #close function
