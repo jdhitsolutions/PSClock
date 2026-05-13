@@ -21,12 +21,8 @@ body:
       label: PowerShell version
       description: What version of PowerShell are you running?
       options:
-        - '4.0'
         - '5.1'
-        - 6.x
-        - '7.0'
-        - '7.1'
-        - '7.2'
+        - '7.x'
         - Other
     validations:
       required: false
@@ -43,5 +39,3 @@ body:
         - MacOS
         - Linux
         - Other
-
-

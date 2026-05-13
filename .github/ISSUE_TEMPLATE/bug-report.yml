@@ -31,12 +31,7 @@ body:
       label: PowerShell version
       description: What version of PowerShell are you running?
       options:
-        - '4.0'
         - '5.1'
-        - 6.x
-        - '7.0'
-        - '7.1'
-        - '7.2'
         - Other
     validations:
       required: true
@@ -63,6 +58,5 @@ body:
           required: true
         - label: You have read this repository's README file.
         - label: You have read full help and examples for the command you are having problems with.
-        - label: You are running PowerShell in an elevated session.
         - label: You are running in a traditional PowerShell console or Windows Terminal
 
