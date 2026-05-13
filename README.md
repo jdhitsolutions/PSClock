@@ -250,6 +250,8 @@ Values will be displayed separated by the vertical pipe character by default. Yo
 
 If you are using Windows Terminal, you may need to configure the tab to use the title length. Set the `Tab width mode` under `Settings - Appearance.` The change won't take effect until you restart Windows terminal.
 
+![title clock](images/title-clock.png)
+
 While running, you can adjust settings using the global `timeClockSettings` variable, which is a hashtable.
 
 ```powershell
