@@ -6,6 +6,7 @@ Function Get-PrimaryDisplaySize {
     Begin {
         _verbose ($strings.Starting -f $MyInvocation.MyCommand)
         _verbose ($strings.Running -f $PSVersionTable.PSVersion)
+        _verbose ($strings.UsingModule -f $modVersion)
         _verbose ($strings.Detected -f $Host.Name)
     } #begin
 

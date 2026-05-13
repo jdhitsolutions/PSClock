@@ -14,7 +14,7 @@ Start a PSClock.
 ## SYNTAX
 
 ```yaml
-Start-PSClock [[-DateFormat] <String>] [-FontSize <Int32>] [-FontStyle <String>] [-FontWeight <String>] [-Color <String>] [-FontFamily <String>] [-OnTop] [-Position <Int32[]>] [-Force] [-Passthru]  [<CommonParameters>]
+Start-PSClock [[-DateFormat] <String>] [-FontSize <Int32>] [-FontStyle <String>] [-FontWeight <String>] [-Color <String>] [-FontFamily <String>] [-OnTop] [-Position <Int32[]>] [-Force] [-Passthru] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -68,6 +68,8 @@ Accept wildcard characters: False
 ### -DateFormat
 
 Specify a .NET format string value like F, or G. See https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings for more information.
+
+This value is case-sensitive.
 
 ```yaml
 Type: String
@@ -225,7 +227,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## NOTES
 
-Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter
+Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

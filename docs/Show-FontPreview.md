@@ -35,10 +35,18 @@ from Get-Date -Format F.
 ### Example 2
 
 ```powershell
-PS C:\> Show-FontPreview -Verbose -SampleText (Get-Date -Format D)
+PS C:\> Show-FontPreview -SampleText (Get-Date -Format D)
 ```
 
 Launch the preview form with the current date displayed. You can always modify the text in the text box.
+
+### Example 3
+
+```powershell
+PS C:\> "$(Get-Date -format t) $env:Computername" | Show-FontPreview
+```
+
+Pipe a sample string to the command.
 
 ## PARAMETERS
 
@@ -54,7 +62,7 @@ Aliases:
 Required: False
 Position: Named
 Default value: $(Get-Date -Format F)
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -64,7 +72,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None
+### [String]
 
 ## OUTPUTS
 
@@ -72,7 +80,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## NOTES
 
-Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter
+Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

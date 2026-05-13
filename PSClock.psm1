@@ -1,11 +1,3 @@
-#Turn on additional verbose messaging when importing the module
-if ($MyInvocation.line -match '-verbose') {
-    $VerbosePreference = 'Continue'
-    $manifest = Import-PowerShellDataFile $PSScriptRoot\PSClock.psd1
-    Write-Verbose "Importing module version $($manifest.ModuleVersion)"
-}
-
-Write-Verbose 'Defining string data'
 if ((Get-Culture).Name -match '\w+') {
     Import-LocalizedData -BindingVariable strings
 }
@@ -14,21 +6,28 @@ else {
     Import-LocalizedData -BindingVariable strings -FileName PSClock.psd1 -BaseDirectory $PSScriptRoot\en-us
 }
 
-Write-Verbose 'Sourcing functions: '
+#Turn on additional verbose messaging when importing the module
+if ($MyInvocation.line -match '-verbose') {
+    $VerbosePreference = 'Continue'
+    $manifest = Import-PowerShellDataFile $PSScriptRoot\PSClock.psd1
+    Write-Verbose ($strings.Importing -f $manifest.ModuleVersion)
+}
+
+Write-Verbose $strings.DotSource
 Get-ChildItem -Path $PSScriptRoot\functions\*.ps1 |
 ForEach-Object {
     Write-Verbose $_.FullName
     . $_.FullName
 }
 
-#define module-scoped variables the path for Save-PSClock
+#define module-scoped variables to the path for Save-PSClock
 $SavePath = Join-Path -Path $home -ChildPath PSClockSettings.xml
 $FlagPath = Join-Path -Path $env:temp -ChildPath psclock-flag.txt
 
-Write-Verbose "Using save path $SavePath"
-Write-Verbose "Using flag file path $FlagPath"
+Write-Verbose ($strings.UsingPath -f $SavePath)
+Write-Verbose ($strings.UsingFlag -f $FlagPath)
 
-Write-Verbose 'Registering argument completer for FontFamily'
+Write-Verbose $strings.RegisterFontCompleter
 Register-ArgumentCompleter -CommandName 'Start-PSClock', 'Set-PSClock' -ParameterName 'FontFamily' -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
 
@@ -40,14 +39,14 @@ Register-ArgumentCompleter -CommandName 'Start-PSClock', 'Set-PSClock' -Paramete
     }
 }
 
-Write-Verbose 'Registering argument completer for Color'
+Write-Verbose $strings.RegisterColorCompleter
 Register-ArgumentCompleter -CommandName 'Start-PSClock', 'Set-PSClock' -ParameterName 'Color' -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
 
     #skipping Transparent as a font color
     [System.Drawing.Brushes].GetProperties().name |
     Select-Object -Skip 1 |
-    Where-Object { $_ -Like "$($WordToComplete)*" } |
+    Where-Object { $_ -like "$($WordToComplete)*" } |
     ForEach-Object {
         #show the color name using the color
         $ansi = Get-RGB $_ | Convert-RGBtoAnsi
@@ -57,7 +56,44 @@ Register-ArgumentCompleter -CommandName 'Start-PSClock', 'Set-PSClock' -Paramete
     }
 }
 
+#register on module exit event to clean up
+#this will only be run when using Remove-Module
+$OnRemoveScript = {
+    #stop clocks if they are running
+    if ($global:consoleClockSettings) {
+        Stop-ConsoleClock
+    }
+    If ($global:titleClockSettings) {
+        Stop-TitleClock
+    }
+    If ($global:psClockSettings.Running) {
+        Stop-PSClock
+    }
+    #the following code is "just-in-case"
+    try {
+        Unregister-Event -SubscriptionId $script:titleClockEvent.SubscriptionId -Force -ErrorAction Stop
+    }
+    catch {
+        #ignore any errors
+    }
+    try {
+        Unregister-Event -SubscriptionId $script:clockEvent.SubscriptionId -Force -ErrorAction Stop
+    }
+    catch {
+        #ignore any errors
+    }
+    Remove-Variable -Name clockEvent -Scope Script -ErrorAction Ignore
+    Remove-Variable -Name titleClockEvent -Scope Script -ErrorAction Ignore
+    Remove-Variable -Name consoleClockSettings -Scope Global -ErrorAction Ignore
+    Remove-Variable -Name titleClockSettings -Scope Global -ErrorAction Ignore
+    Remove-Variable -Name PSClockSettings -Scope Global -ErrorAction Ignore
+}
+$ExecutionContext.SessionState.Module.OnRemove += $OnRemoveScript
 
+#get module version for verbose messaging
+$modVersion = (Test-ModuleManifest -Path $PSScriptRoot\PSClock.psd1).Version
+
+#reset verbose preference
 if ($VerbosePreference -eq 'Continue') {
     $VerbosePreference = 'SilentlyContinue'
 }

@@ -1,35 +1,36 @@
 ---
 external help file: PSClock-help.xml
 Module Name: PSClock
-online version: https://jdhitsolutions.com/yourls/7ed4f9
+online version: https://jdhitsolutions.com/yourls/04efbc
 schema: 2.0.0
 ---
 
-# Stop-PSClock
+# Stop-TitleClock
 
 ## SYNOPSIS
 
-Stop a running PSClock.
+Stop a running title clock.
 
 ## SYNTAX
 
 ```yaml
-Stop-PSClock [-WhatIf] [-Confirm] [<CommonParameters>]
+Stop-TitleClock [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Use this command to stop a running PSClock from the PowerShell prompt. You can also right-click the clock to dismiss it, or close and remove the runspace it is using.
-
-If you close the PowerShell session that launched the clock, the clock will also be closed. Note that this forced closing will not delete the flag file which indicates that a clock is running. The next time you try to start a clock you may see a warning. Delete the specified file and try starting a clock again.
+Stop a clock running the session title or window tab. This will restore the original title
+and remove the global timeClockSettings variable.
 
 ## EXAMPLES
 
 ### Example 1
 
 ```powershell
-PS C:\> Stop-PSClock
+PS C:\> Stop-TitleClock
 ```
+
+This will restore the original title and remove the global $timeClockSettings variable.
 
 ## PARAMETERS
 
@@ -84,8 +85,4 @@ Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 
-[Set-PSClock](Set-PSClock.md)
-
-[Get-PSClock](Get-PSClock.md)
-
-[Start-PSClock](Start-PSClock.md)
+[Start-TitleClock](Start-TitleClock.md)

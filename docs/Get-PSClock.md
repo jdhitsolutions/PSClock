@@ -28,9 +28,9 @@ This command will provide detailed information about a PSClock.
 ```powershell
 PS C:\> Get-PSClock
 
-Running Format FontFamily Size Weight Color  Style  OnTop RunspaceID
-------- ------ ---------- ---- ------ -----  -----  ----- ----------
-True      F    Segoi UI     30 Normal yellow Normal False         62
+Running Format FontFamily Size Weight Color    Style  OnTop RunspaceID
+------- ------ ---------- ---- ------ -----    -----  ----- ----------
+True      F    Candara      50 Normal Honeydew Normal False          7
 ```
 
 Get details about the currently running clock.
@@ -40,18 +40,18 @@ Get details about the currently running clock.
 ```powershell
 PS C:\> Get-PSClock | Select *
 
-Started         : 11/7/2024 4:18:30 PM
+Started         : 5/4/2026 10:44:48 PM
 Format          : F
-Output          : Thursday, November 7, 2024 4:26:18 PM
+Output          : Thursday, May 7, 2026 3:27:40 PM
 Running         : True
-FontFamily      : Segoi UI
-Size            : 30
+FontFamily      : Candara
+Size            : 50
 Weight          : Normal
-Color           : yellow
+Color           : Honeydew
 Style           : Normal
 OnTop           : False
-CurrentPosition : {1635, 1089}
-RunspaceID      : 62
+CurrentPosition : {61, 62}
+RunspaceID      : 7
 ```
 
 Get all details about the current clock.
@@ -72,7 +72,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## NOTES
 
-Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter
+Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

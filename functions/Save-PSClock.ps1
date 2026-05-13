@@ -6,6 +6,7 @@ Function Save-PSClock {
     )
     _verbose ($strings.Starting -f $MyInvocation.MyCommand)
     _verbose ($strings.Running -f $PSVersionTable.PSVersion)
+    _verbose ($strings.UsingModule -f $modVersion)
     _verbose ($strings.Detected -f $Host.Name)
 
     #define a list of properties to export
@@ -17,7 +18,8 @@ Function Save-PSClock {
 
     if ($global:PSClockSettings) {
         _verbose ($strings.Saving -f $SavePath)
-        Get-PSClock | Select-Object -property $props | Export-Clixml -Path $SavePath
+        Get-PSClock | Select-Object -property $props |
+        Export-Clixml -Path $SavePath
         If ($Passthru -AND (-Not $WhatIfPreference)) {
             Get-Item -Path $SavePath
         }

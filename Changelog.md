@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-05-13
+
+### Added
+
+- Added commands `Start-ConsoleClock` and `Stop-ConsoleClock` to display a clock in the upper right corner of a PowerShell console or terminal.
+- Added commands `Start-TitleClock` and `Stop-TitleClock` to display a clock and other information in the session title bar.
+- Added command aliases `scc`, `stcc`, `stc`, and `sttc`.
+- Added a verbose message to show the module version.
+
+### Changed
+
+- Added an event subscription to clean up on module exit, i.e. running `Remove-Module`.
+- Updated `Show-FontPreview` to accept sample text from the pipeline.
+- Updated the README file.
+- Updated localized strings for verbose output on module loading.
+- Updated help examples.
+- Minor code reformatting.
+
 ## [1.5.0] - 2025-03-31
 
 ### Added
@@ -14,7 +32,7 @@
 ### Changed
 
 - Updated `Design.md`.
-- Updated auto completers for the `Color` and `FontFamily` parameters to let the user start typing a parameter value..
+- Updated auto completers for the `Color` and `FontFamily` parameters to let the user start typing a parameter value.
 - Help updates.
 - Updated `README`.
 - Changed dependency from `ThreadJob` to the newer `Microsoft.PowerShell.ThreadJob`.
@@ -49,7 +67,7 @@
   Added alias `spc` for `Set-PSClock`.
 - Added command `Show-FontPreview` to display a preview of a font in a WPF form.
 - Updated Verbose output in the module functions.
-- Updated `Design.md`.s
+- Updated `Design.md`.
 - Updated `README.md`.
 
 ## [1.2.0] - 2022-08-08
@@ -72,7 +90,7 @@
 - Updated `README.md`.
 - Added `Design.md`.
 - General code cleanup.
-- Official release
+- Official release.
 
 ## [0.9.1] - 2021-11-08
 
@@ -111,7 +129,8 @@
 
 - Initial module setup.
 
-[Unreleased]: https://github.com/jdhitsolutions/PSClock/compare/v1.5.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSClock/compare/v1.6.0..HEAD
+[1.6.0]: https://github.com/jdhitsolutions/PSClock/compare/v1.5.0..v1.6.0
 [1.5.0]: https://github.com/jdhitsolutions/PSClock/compare/v1.4.0..v1.5.0
 [1.4.0]: https://github.com/jdhitsolutions/PSClock/compare/v1.3.0..v1.4.0
 [1.3.0]: https://github.com/jdhitsolutions/PSClock/compare/v1.2.0..v1.3.0

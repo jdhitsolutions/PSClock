@@ -4,7 +4,9 @@
 
 ![logo](images/psclock.png)
 
-This module will create a WPF-based clock, launched from a PowerShell prompt that on your Windows desktop. The clock runs in a background PowerShell runspace so that it doesn't block. The module will automatically clean up the runspace when you close the clock. You can customize the clock's appearance including how you want to format the date and time. The clock's background is transparent so all you see is formatted text.
+This module offers several commands for creating clock displays that you can launch from PowerShell.The original module was designed to create a WPF-based clock, launched from a PowerShell prompt that runs on your Windows desktop. The clock runs in a background PowerShell runspace so that it doesn't block. The module will automatically clean up the runspace when you close the clock. You can customize the clock's appearance including how you want to format the date and time. The clock's background is transparent so all you see is formatted text.
+
+The module has since been updated to display customized clock in the [console window](#console-clock) itself, or in the [session title bar or tab](#title-clock).
 
 ## Installation
 
@@ -18,16 +20,20 @@ Installing the module will also install the `Microsoft.PowerShell.ThreadJob` mod
 
 ## Module Commands
 
-| Name                          | Alias       | Synopsis                                      |
-|-------------------------------|-------------|----------------------------------------------|
-| [Get-PrimaryDisplaySize](docs/Get-PrimaryDisplaySize.md) |             | Get the primary display size in pixels.      |
-| [Get-PSClock](docs/Get-PSClock.md)           | *gpc*       | Get PSClock details.                         |
-| [Save-PSClock](docs/Save-PSClock.md)         |             | Save current PSClock settings to a file.     |
-| [Set-PSClock](docs/Set-PSClock.md)           | *spc*       | Modify a running PSClock.                    |
-| [Show-FontPreview](docs/Show-FontPreview.md) |             | Show a font preview in a WPF form.           |
-| [Show-PSClockSettingPreview](docs/Show-PSClockSettingPreview.md) |             | Show a GUI preview of PSClock settings.      |
-| [Start-PSClock](docs/Start-PSClock.md)       | *psclock*   | Start a PSClock.                             |
-| [Stop-PSClock](docs/Stop-PSClock.md)         |             | Stop a running PSClock.                      |
+| Name | Alias | Synopsis |
+| ------ | ------- | ---------- |
+| [Get-PrimaryDisplaySize](docs/Get-PrimaryDisplaySize.md) |  | Get the primary display size in pixels. |
+| [Get-PSClock](docs/Get-PSClock.md) | *gpc* | Get PSClock details. |
+| [Save-PSClock](docs/Save-PSClock.md) | | Save current PSClock settings to a file. |
+| [Set-PSClock](docs/Set-PSClock.md) | *spc* | Modify a running PSClock. |
+| [Show-FontPreview](docs/Show-FontPreview.md) | | Show a font preview in a WPF form. |
+| [Show-PSClockSettingPreview](docs/Show-PSClockSettingPreview.md) | | Show a GUI preview of PSClock settings. |
+| [Start-ConsoleClock](docs/Start-ConsoleClock.md) | *scc* | Start a console-based clock. |
+| [Start-PSClock](docs/Start-PSClock.md) | *psclock* | Start a PSClock. |
+| [Start-TitleClock](docs/Start-TitleClock.md) | *stc* | Start a clock in the session title. |
+| [Stop-ConsoleClock](docs/Stop-ConsoleClock.md) | *stcc* | Stop a running console clock. |
+| [Stop-PSClock](docs/Stop-PSClock.md) | | Stop a running PSClock. |
+| [Stop-TitleClock](docs/Stop-TitleClock.md) | *sttc* | Stop a running title clock. |
 
 ### [Start-PSClock](docs/Start-PSClock.md)
 
@@ -65,7 +71,7 @@ You need to manually delete the file if you no longer wish to use it. If you uni
 
 Use this command to get information about the current clock.
 
-```cmd
+```powershell
 PS C:\> Get-PSClock
 
 Running Format FontFamily Size Weight Color  Style  OnTop RunspaceID
@@ -75,7 +81,9 @@ True      G    Verdana      30 Normal Yellow Normal False         24
 
 If the clock is not running, the `Running` value will be displayed in Red and there will be no `RunspaceID`. There are other properties to this object you might want to use.
 
-```cmd
+```powershell
+PS C:\> Get-PSClock | Select *
+
 Started         : 3/30/2025 10:57:30 AM
 Format          : G
 Output          : 3/30/2025 10:59:49 AM
@@ -132,7 +140,7 @@ Stop-PSClock
 
 You can also right-click the clock to dismiss it, or close and remove the runspace it is using. You can still use `Get-PSClock` which should now reflect that a clock is not running.
 
-```cmd
+```powershell
 PS C:\> Get-PSClock
 
 Running Format FontFamily           Size Weight Color Style  OnTop RunspaceID
@@ -160,11 +168,11 @@ However, this will only run if you type `exit` to terminate the session. If you 
 
 ## Runspaces and Limitations
 
-The clock runs in a separate runspace launched from your PowerShell session. If you close the session, the clock will also be closed.
+The WPF-based clock runs in a separate runspace launched from your PowerShell session. If you close the session, the clock will also be closed.
 
 The command is designed to only have one clock running at a time. If you try to start another clock from another PowerShell session, you will get a warning.
 
-```cmd
+```powershell
 PS C:\> Start-PSClock
 WARNING:
 A running clock has been detected from another PowerShell session:
@@ -180,20 +188,109 @@ If you close PowerShell without properly shutting down the clock you may be left
 
 ## Font Preview
 
-This module also includes a font preview utility. Run `Show-FontPreview` to display a WPF form that will let you preview different fonts.
+This module includes a font preview utility. Run `Show-FontPreview` to display a WPF form that will let you preview different fonts.
 
 ![font preview](images/show-fontpreview.png)
 
 You can use the arrow keys or buttons to navigate through the fonts. Press <kbd>Ctrl+Q</kbd> to quit or manually close the form.
 
-## Module Design
+## Console Clock
+
+Version 1.6.0 added a console clock feature. You can display a clock in the upper-right corner of your PowerShell console or terminal window. The clock uses an event subscription that updates the clock when PowerShell is idle.
+
+The default format is a long date time format like `Thursday, May 7, 2026 3:58:35 PM` displayed in yellow. However, you can format the display using console colors or ANSI escape sequences, including $PSStyle. Optionally, you can add a border which you can also style with color.
+
+```powershell
+PS C:\> Start-ConsoleClock -border -DisplayColor "`e[93;3m"
+```
+
+![console clock](images/console-clock.png)
+
+While running, there is hashtable of settings stored as a global variable `$consoleClockSettings`.
+
+```powershell
+PS C:\> $consoleClockSettings
+
+Name                           Value
+----                           -----
+Format                         F
+DisplayColor
+Border                         True
+BorderColor
+Note                           This is used by the PSClock module. Do not manually remove.
+```
+
+You won't see values for ANSI sequences because they are escape sequences. But you can change any value.
+
+```powershell
+PS C:\> $consoleClockSettings.DisplayColor = "`e[91m"
+PS C:\> $consoleClockSettings.Border = $False
+```
+
+> *You can also use `$PSStyle.Foreground` settings.*
+
+If you manually remove this variable, the console clock will automatically be stopped and removed. Although the last display will remain until you clear the screen or it scrolls out of view.
+
+You can only have one clock at a time. Use `Stop-ConsoleClock` to stop updating the clock. The display will remain until you clear the host or it scrolls out of view.
+
+## Title Clock
+
+Another location for a clock is in the title bar of your PowerShell session, or the tab if using Windows Terminal. Run [Start-TitleClock](docs/Start-TitleClock.md) The default behavior is to display a clock using the `T` format datetime format string. You can also choose to display additional information.
+
+- The PowerShell version number from `$PSVersionTable.PSVersion`
+- Your current location
+- A static piece of text like 'Admin'
+- The value of a global variable
+
+Values will be displayed separated by the vertical pipe character by default. You can select an alternative separator.
+
+```text
+5/11/2026 8:50:17 AM | 7.6.1 | Admin
+```
+
+If you are using Windows Terminal, you may need to configure the tab to use the title length. Set the `Tab width mode` under `Settings - Appearance.` The change won't take effect until you restart Windows terminal.
+
+While running, you can adjust settings using the global `timeClockSettings` variable, which is a hashtable.
+
+```powershell
+PS C:\> $titleClockSettings
+
+Name                           Value
+----                           -----
+Format                         G
+PSVersion                      True
+Text                           Admin
+Variable
+Location                       False
+Separator                      |
+Note                           This is used by the PSClock module. Do not manually remove.
+
+PS C:\> $titleClockSettings.Text = $Null
+PS C:\> $titleClockSettings.Variable = 'shellID'
+PS C:\> $titleClockSettings.location = $True
+```
+
+The change is immediate.
+
+Run `Stop-TitleClock` to restore the original title and remove the `$timeClockSettings` variable.
+This will restore the original title and remove the global timeClockSettings variable.
+
+## WPF Clock Design
 
 For more details about the module design and technical implementation, read the [design document](Design.md).
 
 ## Related Modules
 
-For a WPF-based countdown timer, take a look at the [Start-PSCountdownTimer](https://bit.ly/3T5ntz1) command in the [PSTimers](https://github.com/jdhitsolutions/PSTimers) module.
+For a WPF-based countdown timer, take a look at the [Start-PSCountdownTimer](https://jdhitsolutions.com/yourls/9f666f) command in the [PSTimers](https://github.com/jdhitsolutions/PSTimers) module.
 
 ## Known Issues
 
 There are no known issues at this time. Please post any bugs or feature requests in the [Issues](https://github.com/jdhitsolutions/PSClock/issues) section of this repository.
+
+## Future Plans
+
+These are some ideas I'm considering for future releases.
+
+- Add border styles for the console clock
+- Support a border title for the console clock
+- Add an optional border for the WPF-based clock

@@ -70,6 +70,7 @@ Function Start-PSClock {
     Begin {
         _verbose ($strings.Starting -f $MyInvocation.MyCommand)
         _verbose ($strings.Running -f $PSVersionTable.PSVersion)
+        _verbose ($strings.UsingModule -f $modVersion)
         _verbose ($strings.Detected -f $Host.Name)
     } #begin
     Process {
@@ -297,7 +298,7 @@ Function Start-PSClock {
         Write-Information -MessageData $PSCmd -Tags raw
 
         _verbose ($strings.CreatingFlag -f "$FlagPath")
-        "[{0}] PSClock started by {1} under PowerShell process id $pid" -f (Get-Date), $env:USERNAME |
+        "[{0}] PSClock started  by {1} under PowerShell process id $pid" -f (Get-Date), $env:USERNAME |
         Out-File -FilePath $FlagPath
 
         if ($PassThru) {

@@ -10,7 +10,7 @@ This module will create a WPF-based clock launched from a PowerShell prompt that
 
 Use `Start-PSClock` or the `psclock` alias to launch a PSClock.
 
-```powershell
+```yaml
 PS C:\> Start-PSClock -size 24 -FontFamily 'Bahnschrift Light'
 ```
 
@@ -82,6 +82,7 @@ Use this command to modify the settings of a running PSClock.
 ```powershell
 Set-PSClock -size 30 -color white -FontFamily 'Baskerville Old Face'
 ```
+
 You can also increase the size by selecting the clock and using the <kbd>+</kbd> key. Decrease using the <kbd>-</kbd> key. Each change takes a second to be applied. You might need to "grab" the clock and move it slightly to ensure you have it selected.
 
 If you only want to change the color, you can use PSReadLine to display a formatted list of color options. After the `-Color` parameter, press <kbd>Ctrl+Space</kbd> and answer `Y`. Move the cursor to your selected choice and press <kbd>Enter</kbd>.
@@ -141,5 +142,4 @@ For more details about the module design and technical implementation, read the 
 # KEYWORDS
 
 - psclock
-
 - clock

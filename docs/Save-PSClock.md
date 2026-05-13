@@ -43,7 +43,7 @@ PS C:\> Save-PSClock -passthru
 
 Mode                LastWriteTime         Length Name
 ----                -------------         ------ ----
--a---         3/30/2025   2:26 PM           1123 󰗀  PSClockSettings.xml
+-a---         3/30/2025   2:26 PM           1123 PSClockSettings.xml
 ```
 
 Save current settings and display the file.
@@ -113,7 +113,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## NOTES
 
-Learn more about PowerShell: https://jdhitsolutions.com/yourls/newsletter
+Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 
